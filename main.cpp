@@ -60,3 +60,29 @@ int main(){
     }
     return ans[n-1][m-1];
 }
+ 
+int n=grid.size();
+    int m=grid[0].size();
+    int dx[]{0,1,0,-1};
+    int dy[]{1,0,-1,0};
+    vector<vector<int> > ans(n,vector<int>(m,2147483647));
+    ans[0][0]=grid[0][0];
+    queue<int> a;
+    a.push(0);
+    while (!a.empty()){
+        int x = a.front()/m;
+        int y = a.front()%m;
+        a.pop();
+        for(int i = 0;i<4;i++){
+            int j = x+dx[i];
+            int k = y+dy[i];
+            if(j>=0&&j<n&&k>=0&&k<m) {
+                int tmp = ans[x][y]>abs(grid[j][k])?ans[x][y]:abs(grid[j][k]);
+                if (tmp < ans[j][k]) {
+                    ans[j][k] = tmp;
+                    a.push(j * m + k);
+                }
+            }
+        }
+    }
+    return ans[n-1][m-1]; 
