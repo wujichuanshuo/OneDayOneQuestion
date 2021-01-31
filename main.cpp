@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
+#include <map>
 using namespace  std;
 // 724. 寻找数组的中心索引 easy
 // 2021年1月28日23点29分
@@ -109,45 +110,80 @@ using namespace  std;
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/similar-string-groups
 
-vector<int> isbl;
+//vector<int> isbl;
+//
+//int ab(string a,string b){
+//    int num = 0;
+//    for (int i = 0; i <a.size(); i++) {
+//        if (a[i] != b[i]) {
+//            num++;
+//            if (num > 2) {
+//                return false;
+//            }
+//        }
+//    }
+//    return true;
+//}
+//
+//int find(int x){
+//    return isbl[x] == x ? x : find(isbl[x]);
+//}
+//
+//int main(){
+//    vector<string> strs = {"ajdidocuyh","djdyaohuic","ddjyhuicoa","djdhaoyuic","ddjoiuycha","ddhoiuycja","ajdydocuih","ddjiouycha","ajdydohuic","ddjyouicha"};
+//    isbl.resize(strs.size());
+//    for (int i = 0; i < strs.size(); i++) {
+//        isbl[i] = i;
+//    }
+//    int ans=0;
+//    for(int j=0;j<strs.size();j++){
+//        for(int k=j+1;k<strs.size();k++){
+//            int jl=find(j);
+//            int kl=find(k);
+//            if(jl==kl) continue;
+//            if(ab(strs[j],strs[k])) isbl[kl]=isbl[j]; //这里若改成k，则整个kl块会被忽略掉更新，其他元素指向祖先，所以应该祖先合并才能逐步跳合并
+//        }
+//    }
+//    int ret = 0;
+//    for (int i = 0; i < strs.size(); i++) {
+//        if (isbl[i] == i) {
+//            ans++;
+//        }
+//    }
+//    return ans;
+//}
 
-int ab(string a,string b){
-    int num = 0;
-    for (int i = 0; i <a.size(); i++) {
-        if (a[i] != b[i]) {
-            num++;
-            if (num > 2) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-int find(int x){
-    return isbl[x] == x ? x : find(isbl[x]);
-}
-
+//888. 公平的糖果棒交换 easy
+//2021年2月1日0点34分
+//爱丽丝和鲍勃有不同大小的糖果棒：A[i] 是爱丽丝拥有的第 i 根糖果棒的大小，B[j] 是鲍勃拥有的第 j 根糖果棒的大小。
+//因为他们是朋友，所以他们想交换一根糖果棒，这样交换后，他们都有相同的糖果总量。（一个人拥有的糖果总量是他们拥有的糖果棒大小的总和。）
+//返回一个整数数组 ans，其中 ans[0] 是爱丽丝必须交换的糖果棒的大小，ans[1] 是 Bob 必须交换的糖果棒的大小。
+//如果有多个答案，你可以返回其中任何一个。保证答案存在。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/fair-candy-swap
 int main(){
-    vector<string> strs = {"ajdidocuyh","djdyaohuic","ddjyhuicoa","djdhaoyuic","ddjoiuycha","ddhoiuycja","ajdydocuih","ddjiouycha","ajdydohuic","ddjyouicha"};
-    isbl.resize(strs.size());
-    for (int i = 0; i < strs.size(); i++) {
-        isbl[i] = i;
+    vector<int> A{1,1};
+    vector<int> B{2,2};
+    map<int,int> c;
+    map<int,int> d;
+    int sumA=0;
+    int sumB=0;
+    for(auto i :A){
+        sumA+=i;
+        c[i]=1;
     }
-    int ans=0;
-    for(int j=0;j<strs.size();j++){
-        for(int k=j+1;k<strs.size();k++){
-            int jl=find(j);
-            int kl=find(k);
-            if(jl==kl) continue;
-            if(ab(strs[j],strs[k])) isbl[kl]=isbl[j]; //这里若改成k，则整个kl块会被忽略掉更新，其他元素指向祖先，所以应该祖先合并才能逐步跳合并
+    for(auto i:B){
+        sumB+=i;
+        d[i]=1;
+    }
+    int cz = sumA-sumB;
+    vector<int> ans;
+    for(int i:A){
+        if(d.find((cz-2*i)/-2)!=d.end()) {
+            ans.push_back(i);
+            ans.push_back((cz-2*i)/-2);
+            break;
         }
     }
-    int ret = 0;
-    for (int i = 0; i < strs.size(); i++) {
-        if (isbl[i] == i) {
-            ans++;
-        }
-    }
-    return ans;
+    cout<<ans[0]<<ans[1];
 }
