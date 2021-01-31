@@ -108,3 +108,46 @@ using namespace  std;
 //给你一个字符串列表 strs。列表中的每个字符串都是 strs 中其它所有字符串的一个字母异位词。请问 strs 中有多少个相似字符串组？
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/similar-string-groups
+
+vector<int> isbl;
+
+int ab(string a,string b){
+    int num = 0;
+    for (int i = 0; i <a.size(); i++) {
+        if (a[i] != b[i]) {
+            num++;
+            if (num > 2) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int find(int x){
+    return isbl[x] == x ? x : find(isbl[x]);
+}
+
+int main(){
+    vector<string> strs = {"ajdidocuyh","djdyaohuic","ddjyhuicoa","djdhaoyuic","ddjoiuycha","ddhoiuycja","ajdydocuih","ddjiouycha","ajdydohuic","ddjyouicha"};
+    isbl.resize(strs.size());
+    for (int i = 0; i < strs.size(); i++) {
+        isbl[i] = i;
+    }
+    int ans=0;
+    for(int j=0;j<strs.size();j++){
+        for(int k=j+1;k<strs.size();k++){
+            int jl=find(j);
+            int kl=find(k);
+            if(jl==kl) continue;
+            if(ab(strs[j],strs[k])) isbl[kl]=isbl[j]; //这里若改成k，则整个kl块会被忽略掉更新，其他元素指向祖先，所以应该祖先合并才能逐步跳合并
+        }
+    }
+    int ret = 0;
+    for (int i = 0; i < strs.size(); i++) {
+        if (isbl[i] == i) {
+            ans++;
+        }
+    }
+    return ans;
+}
