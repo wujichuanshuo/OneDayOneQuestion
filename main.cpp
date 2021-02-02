@@ -161,29 +161,57 @@ using namespace  std;
 //如果有多个答案，你可以返回其中任何一个。保证答案存在。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/fair-candy-swap
+//int main(){
+//    vector<int> A{1,1};
+//    vector<int> B{2,2};
+//    map<int,int> c;
+//    map<int,int> d;
+//    int sumA=0;
+//    int sumB=0;
+//    for(auto i :A){
+//        sumA+=i;
+//        c[i]=1;
+//    }
+//    for(auto i:B){
+//        sumB+=i;
+//        d[i]=1;
+//    }
+//    int cz = sumA-sumB;
+//    vector<int> ans;
+//    for(int i:A){
+//        if(d.find((cz-2*i)/-2)!=d.end()) {
+//            ans.push_back(i);
+//            ans.push_back((cz-2*i)/-2);
+//            break;
+//        }
+//    }
+//    cout<<ans[0]<<ans[1];
+//}
+
+//424. 替换后的最长重复字符 mid
+//2021年2月2日21点10分
+//给你一个仅由大写英文字母组成的字符串，你可以将任意位置上的字符替换成另外的字符，总共可最多替换 k 次。在执行上述操作后，找到包含重复字母的最长子串的长度。
+//注意：字符串长度 和 k 不会超过 10^4。
+//示例 1：
+//输入：s = "ABAB", k = 2
+//输出：4
+//解释：用两个'A'替换为两个'B',反之亦然。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/longest-repeating-character-
 int main(){
-    vector<int> A{1,1};
-    vector<int> B{2,2};
-    map<int,int> c;
-    map<int,int> d;
-    int sumA=0;
-    int sumB=0;
-    for(auto i :A){
-        sumA+=i;
-        c[i]=1;
-    }
-    for(auto i:B){
-        sumB+=i;
-        d[i]=1;
-    }
-    int cz = sumA-sumB;
-    vector<int> ans;
-    for(int i:A){
-        if(d.find((cz-2*i)/-2)!=d.end()) {
-            ans.push_back(i);
-            ans.push_back((cz-2*i)/-2);
-            break;
+    string s = "AABABBA";
+    int k =1;
+    vector<int> num(26);
+    int maxn=0;
+    int left=0,right=0;
+    while (right<s.length()){
+        num[s[right]-'A']++;
+        maxn= max(maxn,num[s[right]-'A']);
+        if(right-left+1-maxn<k){
+            num[s[left]-'A']--;
+            left++;
         }
+        right++;
     }
-    cout<<ans[0]<<ans[1];
+    return right-left;
 }
