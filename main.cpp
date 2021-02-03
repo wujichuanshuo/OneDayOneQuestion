@@ -334,3 +334,29 @@ using namespace  std;
 //        return -1;
 //    }
 //};
+
+//643. 子数组最大平均数 I easy
+//2021年2月4日00点10分
+//给定 n 个整数，找出平均数最大且长度为 k 的连续子数组，并输出该最大平均数。
+//示例：
+//输入：[1,12,-5,-6,50,3], k = 4
+//输出：12.75
+//解释：最大平均数 (12-5-6+50)/4 = 51/4 = 12.75
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/maximum-average-subarray-i
+int main(){
+    vector<int> nums;
+    int k;
+    int ans=0;
+    int s=0;
+    for(int i=0;i<k;i++){
+        s+=nums[i];
+    }
+    ans=s;
+    for(int i=k;i<nums.size();i++){
+        s+=nums[i];
+        s-=nums[i-k];
+        ans=max(ans,s);
+    }
+    return double(ans)/double(k);
+}
