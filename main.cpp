@@ -3,6 +3,9 @@
 #include <queue>
 #include <cmath>
 #include <map>
+#include <stack>
+#include <cstdio>
+
 using namespace  std;
 // 724. 寻找数组的中心索引 easy
 // 2021年1月28日23点29分
@@ -198,20 +201,75 @@ using namespace  std;
 //解释：用两个'A'替换为两个'B',反之亦然。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/longest-repeating-character-
-int main(){
-    string s = "AABABBA";
-    int k =1;
-    vector<int> num(26);
-    int maxn=0;
-    int left=0,right=0;
-    while (right<s.length()){
-        num[s[right]-'A']++;
-        maxn= max(maxn,num[s[right]-'A']);
-        if(right-left+1-maxn<k){
-            num[s[left]-'A']--;
-            left++;
-        }
-        right++;
-    }
-    return right-left;
-}
+//int main(){
+//    string s = "AABABBA";
+//    int k =1;
+//    vector<int> num(26);
+//    int maxn=0;
+//    int left=0,right=0;
+//    while (right<s.length()){
+//        num[s[right]-'A']++;
+//        maxn= max(maxn,num[s[right]-'A']);
+//        if(right-left+1-maxn<k){
+//            num[s[left]-'A']--;
+//            left++;
+//        }
+//        right++;
+//    }
+//    return right-left;
+//}
+
+//随便写写
+//int gcd(int a,int b)
+//{
+//    return b>0?gcd(b,a%b):a;
+//}
+//int main(){
+//    int i;
+//    cin>>i;
+//    int a[i];
+//    for(int z=0;z<i;z++){
+//        cin>>a[z];
+//    }
+//    int ans=0;
+//    ans=gcd(a[0],a[1]);
+//    for(int z=2;z<i;z++){
+//        ans=gcd(ans,a[z]);
+//    }
+//    cout<<ans;
+//}
+//int main(){
+//    stack<int> a;
+//    int n;
+//    scanf("%d",&n);
+//    for(int i=0;i<n;i++){
+//        int b,c;
+//        scanf("%d",&b);
+//        if(b==1){
+//            scanf("%d",&c);
+//            a.push(c);
+//        }
+//        if(b==2){
+//            scanf("%d",&c);
+//            for(int j=0;j<c;j++)
+//                a.pop();
+//        }
+//        if(b==3){
+//            printf("%d\n",a.top());
+//        }
+//    }
+//}
+
+//480. 滑动窗口中位数 hard
+//2021年2月3日10点55分
+//中位数是有序序列最中间的那个数。如果序列的大小是偶数，则没有最中间的数；此时中位数是最中间的两个数的平均数。
+//例如：
+//[2,3,4]，中位数是 3
+//[2,3]，中位数是 (2 + 3) / 2 = 2.5
+//给你一个数组 nums，有一个大小为 k 的窗口从最左端滑动到最右端。窗口中有 k 个数，每次窗口向右移动 1 位。你的任务是找出每次窗口移动后得到的新窗口中元素的中位数，并输出由它们组成的数组
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/sliding-window-median
+//python偷懒，暴力能过，等下再写个不暴力的
+//class Solution:
+//        def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
+//return [sorted(nums[i:i+k])[k//2] for i in range(len(nums)-k+1)] if k%2 else [(sorted(nums[i:i+k])[k//2]+sorted(nums[i:i+k])[(k-1)//2])/2 for i in range(len(nums)-k+1)]
