@@ -273,3 +273,64 @@ using namespace  std;
 //class Solution:
 //        def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
 //return [sorted(nums[i:i+k])[k//2] for i in range(len(nums)-k+1)] if k%2 else [(sorted(nums[i:i+k])[k//2]+sorted(nums[i:i+k])[(k-1)//2])/2 for i in range(len(nums)-k+1)]
+
+//面试题 01.01. 判定字符是否唯一
+//2021年2月3日20点55分
+//实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
+//示例 1：
+//输入: s = "leetcode"
+//输出: false
+//示例 2：
+//输入: s = "abc"
+//输出: true
+//限制：
+//0 <= len(s) <= 100
+//如果你不使用额外的数据结构，会很加分。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/is-unique-lcci
+//int main(){
+//    string astr;
+//    int a[260]={0};
+//    for(char i:astr){
+//        if(a[i]>0)
+//            return false;
+//        a[i]++;
+//    }
+//    return true;
+//}
+
+//剑指 Offer 09. 用两个栈实现队列 easy
+//2021年2月3日23点35分
+//用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof
+//class CQueue {
+//public:
+//    stack<int > a;
+//    stack<int > b;
+//    CQueue() {
+//    }
+//
+//    void appendTail(int value) {
+//        a.push(value);
+//    }
+//
+//    int deleteHead() {
+//        if(!b.empty()){
+//            int ans = b.top();
+//            b.pop();
+//            return ans;
+//        }else{
+//            while(!a.empty()){
+//                b.push(a.top());
+//                a.pop();
+//            }
+//        }
+//        if(!b.empty()){
+//            int ans = b.top();
+//            b.pop();
+//            return ans;
+//        }
+//        return -1;
+//    }
+//};
