@@ -392,25 +392,50 @@ using namespace  std;
 //如果 s 中没有子字符串可以转化成 t 中对应的子字符串，则返回 0。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/get-equal-substrings-within-budget
+//int main(){
+//    string s="abcd";
+//    string t="cdef";
+//    int maxCost=3;
+//    int left=0;
+//    int right=0;
+//    int ans=0;
+//    int tmp=0;
+//    while (right<s.size()){
+//        if(tmp>maxCost){
+//            tmp-=abs(s[left]-t[left]);
+//            ans=max(ans,right-left-1);
+//            left++;
+//        }
+//        else{
+//            tmp+=abs(s[right]-t[right]);
+//            right++;
+//        };
+//    }
+//    ans = max(ans, tmp <= maxCost ? right - left : right - left - 1);
+//    return ans;
+//}
+
+
+//1423. 可获得的最大点数 mid
+//2021年2月6日20点05分
+//几张卡牌 排成一行，每张卡牌都有一个对应的点数。点数由整数数组 cardPoints 给出。
+//每次行动，你可以从行的开头或者末尾拿一张卡牌，最终你必须正好拿 k 张卡牌。
+//你的点数就是你拿到手中的所有卡牌的点数之和。
+//给你一个整数数组 cardPoints 和整数 k，请你返回可以获得的最大点数。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards
 int main(){
-    string s="abcd";
-    string t="cdef";
-    int maxCost=3;
-    int left=0;
-    int right=0;
+    vector<int> cardPoints = {1,2,3,4,5,6,1};
+    int k=3;
     int ans=0;
-    int tmp=0;
-    while (right<s.size()){
-        if(tmp>maxCost){
-            tmp-=abs(s[left]-t[left]);
-            ans=max(ans,right-left-1);
-            left++;
-        }
-        else{
-            tmp+=abs(s[right]-t[right]);
-            right++;
-        };
+    int tmp;
+    for(int i=cardPoints.size()-k;i<cardPoints.size();i++){
+        ans+=cardPoints[i];
     }
-    ans = max(ans, tmp <= maxCost ? right - left : right - left - 1);
+    tmp=ans;
+    for(int i=0;i<k;i++){
+        tmp+=(cardPoints[i]-cardPoints[cardPoints.size()-k+i]);
+        ans=max(tmp,ans);
+    }
     return ans;
 }
