@@ -479,7 +479,7 @@ using namespace  std;
 //s.append(s[-1]+i)
 //return abs(min(s)-max(s))
 
-
+//忘了啥题
 //int main(){
 //    string s;
 //    int n =s.length();
