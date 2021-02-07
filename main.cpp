@@ -5,6 +5,7 @@
 #include <map>
 #include <stack>
 #include <cstdio>
+#include <algorithm>
 
 using namespace  std;
 // 724. 寻找数组的中心索引 easy
@@ -424,18 +425,201 @@ using namespace  std;
 //给你一个整数数组 cardPoints 和整数 k，请你返回可以获得的最大点数。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards
-int main(){
-    vector<int> cardPoints = {1,2,3,4,5,6,1};
-    int k=3;
-    int ans=0;
-    int tmp;
-    for(int i=cardPoints.size()-k;i<cardPoints.size();i++){
-        ans+=cardPoints[i];
-    }
-    tmp=ans;
-    for(int i=0;i<k;i++){
-        tmp+=(cardPoints[i]-cardPoints[cardPoints.size()-k+i]);
-        ans=max(tmp,ans);
-    }
-    return ans;
-}
+//int main(){
+//    vector<int> cardPoints = {1,2,3,4,5,6,1};
+//    int k=3;
+//    int ans=0;
+//    int tmp;
+//    for(int i=cardPoints.size()-k;i<cardPoints.size();i++){
+//        ans+=cardPoints[i];
+//    }
+//    tmp=ans;
+//    for(int i=0;i<k;i++){
+//        tmp+=(cardPoints[i]-cardPoints[cardPoints.size()-k+i]);
+//        ans=max(tmp,ans);
+//    }
+//    return ans;
+//}
+
+
+//665. 非递减数列
+//int main(){
+//    vector<int> nums;
+//    int flag=0;
+//    for(int i=1;i<nums.size()&&flag<2;i++){
+//        if(nums[i-1]>=nums[i]){
+//            flag++;
+//            if(i-2>=0&&nums[i-2]>nums[i])
+//                nums[i]=nums[i-1];
+//            else
+//                nums[i-1]=nums[i];
+//        }
+//    }
+//    return flag<=1;
+//}
+
+
+//5657. 唯一元素的和
+//int main(){
+//    int a[106]={0};
+//    for(int i=0;i<nums.size();i++)
+//        a[nums[i]]++;
+//    int ans=0;
+//    for(int i=0;i<103;i++){
+//        if(a[i]==1)
+//            ans+=i;
+//    }
+//    return ans;
+//}
+
+
+//5658. 任意子数组和的绝对值的最大值
+//s = [0]
+//for i in nums:
+//s.append(s[-1]+i)
+//return abs(min(s)-max(s))
+
+
+//int main(){
+//    string s;
+//    int n =s.length();
+//    int j=0;
+//    int k=n-1;
+//    while (j<k&&s[j]==s[k]){
+//        char c=s[j];
+//        while (c==s[j]&&j<=k) j++;
+//        while (c==s[k]&&j<=k) k--;
+//    }
+//    return k-j-1;
+//}
+
+
+//5672. 检查数组是否经排序和轮转得到
+//int main(){
+//    vector<int> nums = {6,10,6};
+//    vector<int> tmp(nums);
+//    sort(tmp.begin(),tmp.end());
+//    vector<int> min;
+//    for(int i=0;i<nums.size();i++){
+//        if(nums[i]==tmp[0]){
+//            min.push_back(i);
+//        }
+//
+//    }
+//    int tmp1=0;
+//    int flag=1;
+//    for(int j=0;j<min.size();j++){
+//        for(int i=0;i<nums.size();i++){
+//            tmp1=(i+min[j])%nums.size();
+//            if(tmp[i]!=nums[tmp1]){
+//                flag=0;
+//                break;
+//            }
+//        }
+//        if(flag)
+//            return true;
+//        else{
+//            flag=1;
+//        }
+//    }
+//    return false;
+//}
+
+
+//5673. 移除石子的最大得分
+//int main(){
+//    int a=4,b=4,c=6;
+//    priority_queue <int,vector<int>,less<int> > q;
+//    q.push(a);
+//    q.push(b);
+//    q.push(c);
+//    int ans=0;
+//    while(q.size()>=2){
+//        int tmp1=q.top()-1;
+//        q.pop();
+//        int tmp2=q.top()-1;
+//        q.pop();
+//        if(tmp1!=0)
+//            q.push(tmp1);
+//        if(tmp2!=0)
+//            q.push(tmp2);
+//        ans++;
+//    }
+//    return ans;
+//}
+
+
+//5674. 构造字典序最大的合并字符串
+//int main(){
+//    string word1 = "cabaa";
+//    string word2 = "bcaaa";
+//    int j=0;
+//    int k=0;
+//    string ans;
+//    while (j<word1.size()||k<word2.size()){
+//        if(j<word1.size()&&k<word2.size()){
+//            char tmp;
+//            if(word1[j]>word2[k]){
+//                tmp=word1[j];
+//                j++;
+//            } else if(word1[j]==word2[k]){
+//                int tmp1=j,tmp2=k;
+//                int flag=0;
+//                while(tmp1<word1.size()&&tmp2<word2.size()){
+//                    if(word1[tmp1]!=word2[tmp2])
+//                        break;
+//                    tmp1++;
+//                    tmp2++;
+//                }
+//                if(word1[tmp1]>word2[tmp2])
+//                {
+//                    tmp=word1[j];
+//                    j++;
+//                } else if(word1[tmp1]<word2[tmp2]){
+//                    tmp=word2[k];
+//                    k++;
+//                }else{
+//                    if(tmp1<word1.size()){
+//                        tmp=word1[j];
+//                        j++;
+//                    } else{
+//                        tmp=word2[k];
+//                        k++;
+//                    }
+//                }
+//            }else{
+//                tmp=word2[k];
+//                k++;
+//            }
+//            ans.push_back(tmp);
+//        }
+//        else if(j<word1.size()){
+//            for(int i=j;i<word1.size();i++){
+//                ans.push_back(word1[i]);
+//            }
+//            break;
+//        }else{
+//            for(int i=k;i<word2.size();i++){
+//                ans.push_back(word2[i]);
+//            }
+//            break;
+//        }
+//    }
+//    cout<<ans;
+//}
+
+//int main(){
+//    vector<int> nums = {7,-9,15,-2};
+//    int goal=-5;
+//    vector<int> tmp={0};
+//    for(int i=0;i<=nums.size();i++){
+//        tmp.push_back(tmp[i]+nums[i]);
+//    }
+//    int ans=999999999;
+//    for(int j=0;j<nums.size();j++){
+//        for(int k=j+1;k<nums.size();k++){
+//            ans=min(ans,abs(tmp[k]-tmp[j]-goal));
+//        }
+//    }
+//    return ans;
+//}
