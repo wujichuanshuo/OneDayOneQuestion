@@ -623,7 +623,7 @@ using namespace  std;
 //    }
 //    return ans;
 //}
-//2.8
+//978. 最长湍流子数组
 //int len = A.size();
 //        int up = 1, down = 1;
 //        int ans = 1;
@@ -634,7 +634,7 @@ using namespace  std;
 //            ans = max(ans, max(up, down));
 //        }
 //        return ans;
-//2.9
+//992. K 个不同整数的子数组
 //class Solution {
 //public int subarraysWithKDistinct(int[] A, int K) {
 //        return subarrayNomorethanK(A,K)-subarrayNomorethanK(A,K-1);
@@ -673,17 +673,53 @@ using namespace  std;
 // }
 
 //485. 最大连续 1 的个数
-int main(){
-    vector<int> nums = {1,0,1,1,0,1};
-    int ans = 0;
-    int tmp = 0;
-    for(int i=0;i<nums.size();i++)
-        if(nums[i])
-            tmp++;
-        else{
-            ans=max(tmp,ans);
-            tmp=0;
-        }
-    return max(tmp,ans);;
+//int main(){
+//    vector<int> nums = {1,0,1,1,0,1};
+//    int ans = 0;
+//    int tmp = 0;
+//    for(int i=0;i<nums.size();i++)
+//        if(nums[i])
+//            tmp++;
+//        else{
+//            ans=max(tmp,ans);
+//            tmp=0;
+//        }
+//    return max(tmp,ans);;
+//}
 
+//448. 找到所有数组中消失的数字
+//给定一个范围在  1 ≤ a[i] ≤ n ( n = 数组大小 ) 的 整型数组，数组中的元素一些出现了两次，另一些只出现一次。
+//找到所有在 [1, n] 范围之间没有出现在数组中的数字。
+//您能在不使用额外空间且时间复杂度为O(n)的情况下完成这个任务吗? 你可以假定返回的数组不算在额外空间内。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array
+//int main(){
+//    vector<int> nums= {4,3,2,7,8,2,3,1};
+//    for(int i=0;i<nums.size();i++){
+//        if(nums[abs(nums[i])-1]>0)
+//            nums[abs(nums[i])-1]*=-1;
+//    }
+//    vector<int > ans;
+//    for(int i=0;i<nums.size();i++){
+//        if(nums[i]>0)
+//            ans.push_back(i+1);
+//    }
+//    for(int i=0;i<ans.size();i++){
+//        cout<<ans[i]<<" ";
+//    }
+//}
+
+
+//119. 杨辉三角 II
+int main(){
+    int rowIndex;
+    vector<int> res(rowIndex+1);
+    res[0] = 1;
+    for(int j = 1; j <= rowIndex; j++){
+        for(int i = j; i >=0; i--){
+            res[i] = (i-1>=0?res[i-1]: 0) + res[i];
+        }
+    }
+
+//    return res;
 }
