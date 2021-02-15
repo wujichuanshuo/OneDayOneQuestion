@@ -623,13 +623,67 @@ using namespace  std;
 //    }
 //    return ans;
 //}
-int len = A.size();
-        int up = 1, down = 1;
-        int ans = 1;
-        for (int i = 1; i < len; i++) {
-            if (A[i] > A[i - 1]) { up = down + 1; down = 1; }
-            else if (A[i] < A[i - 1]) { down = up + 1; up = 1; }
-            else { up = down = 1; }
-            ans = max(ans, max(up, down));
+//2.8
+//int len = A.size();
+//        int up = 1, down = 1;
+//        int ans = 1;
+//        for (int i = 1; i < len; i++) {
+//            if (A[i] > A[i - 1]) { up = down + 1; down = 1; }
+//            else if (A[i] < A[i - 1]) { down = up + 1; up = 1; }
+//            else { up = down = 1; }
+//            ans = max(ans, max(up, down));
+//        }
+//        return ans;
+//2.9
+//class Solution {
+//public int subarraysWithKDistinct(int[] A, int K) {
+//        return subarrayNomorethanK(A,K)-subarrayNomorethanK(A,K-1);
+//    }
+//private int subarrayNomorethanK(int[] A, int k) {//不同元素不超过k的子数组个数
+//        int l=0,r=0;
+//        int ans=0;
+//        int[] count=new int[A.length+1];//记录每个整数出现的频数。A[i]取值在[1,A.length]
+//        int diffElem=0;//count[]非零元素个数，即不同的整数个数
+//        while(r<A.length){
+//            if(count[A[r]]==0) diffElem++;
+//            count[A[r++]]++;//右滑窗口
+//            while(diffElem>k){//窗口内的不同整数个数超过了K，缩小窗口
+//                count[A[l]]--;
+//                if(count[A[l]]==0)diffElem--;
+//                l++;
+//            }
+//            ans+=r-l;//窗口内所有的“不同整数不超过k的子数组个数”(左闭右开)
+//        }
+//        return ans;
+//    }
+//}
+
+//561. 数组拆分 I
+//给定长度为 2n 的整数数组 nums ，你的任务是将这些数分成 n 对, 例如 (a1, b1), (a2, b2), ..., (an, bn) ，使得从 1 到 n 的 min(ai, bi) 总和最大。
+//返回该 最大总和 。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/array-partition-i
+//int main(){
+//    vector<int> nums={1,4,3,2};
+//    sort(nums.begin(),nums.end());
+//    int ans=0;
+//    for(int i=0;i<nums.size();i+=2)
+//        ans+=nums[i];
+//    return ans;
+// }
+
+//485. 最大连续 1 的个数
+int main(){
+    vector<int> nums = {1,0,1,1,0,1};
+    int ans = 0;
+    int tmp = 0;
+    for(int i=0;i<nums.size();i++)
+        if(nums[i])
+            tmp++;
+        else{
+            ans=max(tmp,ans);
+            tmp=0;
         }
-        return ans;
+    return max(tmp,ans);;
+
+}
