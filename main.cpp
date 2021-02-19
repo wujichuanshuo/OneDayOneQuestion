@@ -727,24 +727,65 @@ using namespace  std;
 //1004. 最大连续1的个数 III
 //给定一个由若干 0 和 1 组成的数组 A，我们最多可以将 K 个值从 0 变成 1 。
 //返回仅包含 1 的最长（连续）子数组的长度
+//int main(){
+//    vector<int> A={0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1};
+//    int K=3;
+//    int left =0 , right=0 , len=A.size(),cut=0,ans=0;
+//    while (right<len){
+//        if(A[right]==1)
+//            right++;
+//        else{
+//            if(cut<K){
+//                cut++;
+//                right++;
+//            } else{
+//                if(A[left]==0)
+//                    cut--;
+//                left++;
+//            }
+//        }
+//        ans = max(ans,right-left);
+//    }
+//    return ans;
+//}
+
+
+//697. 数组的度
+//给定一个非空且只包含非负数的整数数组 nums，数组的度的定义是指数组里任一元素出现频数的最大值。
+//你的任务是在 nums 中找到与 nums 拥有相同大小的度的最短连续子数组，返回其长度。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/degree-of-an-array
 int main(){
-    vector<int> A={0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1};
-    int K=3;
-    int left =0 , right=0 , len=A.size(),cut=0,ans=0;
-    while (right<len){
-        if(A[right]==1)
-            right++;
-        else{
-            if(cut<K){
-                cut++;
-                right++;
-            } else{
-                if(A[left]==0)
-                    cut--;
-                left++;
+    vector<int> nums = {1,2,2,3,1,4,2};
+    map<int,vector<int>> a;
+    for(int i=0;i<nums.size();i++){
+
+        if(a.find(nums[i])==a.end()){
+            vector<int> z(3,0);
+            a.insert(make_pair(nums[i],z));
+            auto& p = a[nums[i]];
+            p[0]++;
+            p[1]=i;
+        }else{
+            auto& p = a[nums[i]];
+            p[0]++;
+            p[2]=i;
+        }
+    }
+    int ans=500010,tmp=2;
+    for(auto i=a.begin();i!=a.end();i++){
+        if(i->second[0]>=tmp){
+            if(i->second[0]>=tmp){
+                if(i->second[0]==tmp)
+                    ans=min(ans,i->second[2]-i->second[1]);
+                else{
+                    tmp = i->second[0];
+                    ans=i->second[2]-i->second[1];
+                }
             }
         }
-        ans = max(ans,right-left);
     }
-    return ans;
+    if(ans==500010)
+        return 1;
+    return ans+1;
 }
