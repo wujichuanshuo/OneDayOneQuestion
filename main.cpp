@@ -711,15 +711,40 @@ using namespace  std;
 
 
 //119. 杨辉三角 II
-int main(){
-    int rowIndex;
-    vector<int> res(rowIndex+1);
-    res[0] = 1;
-    for(int j = 1; j <= rowIndex; j++){
-        for(int i = j; i >=0; i--){
-            res[i] = (i-1>=0?res[i-1]: 0) + res[i];
-        }
-    }
-
+//int main(){
+//    int rowIndex;
+//    vector<int> res(rowIndex+1);
+//    res[0] = 1;
+//    for(int j = 1; j <= rowIndex; j++){
+//        for(int i = j; i >=0; i--){
+//            res[i] = (i-1>=0?res[i-1]: 0) + res[i];
+//        }
+//    }
+//
 //    return res;
+//}
+
+//1004. 最大连续1的个数 III
+//给定一个由若干 0 和 1 组成的数组 A，我们最多可以将 K 个值从 0 变成 1 。
+//返回仅包含 1 的最长（连续）子数组的长度
+int main(){
+    vector<int> A={0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1};
+    int K=3;
+    int left =0 , right=0 , len=A.size(),cut=0,ans=0;
+    while (right<len){
+        if(A[right]==1)
+            right++;
+        else{
+            if(cut<K){
+                cut++;
+                right++;
+            } else{
+                if(A[left]==0)
+                    cut--;
+                left++;
+            }
+        }
+        ans = max(ans,right-left);
+    }
+    return ans;
 }
