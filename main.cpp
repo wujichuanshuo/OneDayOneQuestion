@@ -755,37 +755,72 @@ using namespace  std;
 //你的任务是在 nums 中找到与 nums 拥有相同大小的度的最短连续子数组，返回其长度。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/degree-of-an-array
-int main(){
-    vector<int> nums = {1,2,2,3,1,4,2};
-    map<int,vector<int>> a;
-    for(int i=0;i<nums.size();i++){
+//int main(){
+//    vector<int> nums = {1,2,2,3,1,4,2};
+//    map<int,vector<int>> a;
+//    for(int i=0;i<nums.size();i++){
+//
+//        if(a.find(nums[i])==a.end()){
+//            vector<int> z(3,0);
+//            a.insert(make_pair(nums[i],z));
+//            auto& p = a[nums[i]];
+//            p[0]++;
+//            p[1]=i;
+//        }else{
+//            auto& p = a[nums[i]];
+//            p[0]++;
+//            p[2]=i;
+//        }
+//    }
+//    int ans=500010,tmp=2;
+//    for(auto i=a.begin();i!=a.end();i++){
+//        if(i->second[0]>=tmp){
+//            if(i->second[0]>=tmp){
+//                if(i->second[0]==tmp)
+//                    ans=min(ans,i->second[2]-i->second[1]);
+//                else{
+//                    tmp = i->second[0];
+//                    ans=i->second[2]-i->second[1];
+//                }
+//            }
+//        }
+//    }
+//    if(ans==500010)
+//        return 1;
+//    return ans+1;
+//}
 
-        if(a.find(nums[i])==a.end()){
-            vector<int> z(3,0);
-            a.insert(make_pair(nums[i],z));
-            auto& p = a[nums[i]];
-            p[0]++;
-            p[1]=i;
-        }else{
-            auto& p = a[nums[i]];
-            p[0]++;
-            p[2]=i;
-        }
-    }
-    int ans=500010,tmp=2;
-    for(auto i=a.begin();i!=a.end();i++){
-        if(i->second[0]>=tmp){
-            if(i->second[0]>=tmp){
-                if(i->second[0]==tmp)
-                    ans=min(ans,i->second[2]-i->second[1]);
-                else{
-                    tmp = i->second[0];
-                    ans=i->second[2]-i->second[1];
-                }
-            }
-        }
-    }
-    if(ans==500010)
-        return 1;
-    return ans+1;
-}
+
+//1438. 绝对差不超过限制的最长连续子数组
+//给你一个整数数组 nums ，和一个表示限制的整数 limit，请你返回最长连续子数组的长度，该子数组中的任意两个元素之间的绝对差必须小于或者等于 limit 。
+//如果不存在满足条件的子数组，则返回 0 。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit
+//class Solution {
+//public int longestSubarray(int[] nums, int limit) {deque<int> min_que, max_que;
+//        int left = 0, right = 0, ans = 0;
+//        while(right < nums.size())
+//        {
+//            // 滑动窗口的最小值，单调递增
+//            while(!min_que.empty() && min_que.back() > nums[right])
+//                min_que.pop_back();
+//            min_que.push_back(nums[right]);
+//            // 滑动窗口的最大值，单调递减
+//            while(!max_que.empty() && max_que.back() < nums[right])
+//                max_que.pop_back();
+//            max_que.push_back(nums[right]);
+//            right++;
+//            // 根据窗口的最小值和最大值的差更新窗口
+//            while(max_que.front()-min_que.front() > limit)
+//            {
+//                if(nums[left] == min_que.front())
+//                    min_que.pop_front();
+//                if(nums[left] == max_que.front())
+//                    max_que.pop_front();
+//                left++;
+//            }
+//            ans = max(ans, right-left);
+//        }
+//        return ans
+//    }
+//}
