@@ -824,3 +824,103 @@ using namespace  std;
 //        return ans
 //    }
 //}
+
+
+//766. 托普利茨矩阵
+//给你一个 m x n 的矩阵 matrix 。如果这个矩阵是托普利茨矩阵，返回 true ；否则，返回 false 。
+//如果矩阵上每一条由左上到右下的对角线上的元素都相同，那么这个矩阵是 托普利茨矩阵 。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/toeplitz-matrix
+//int main(){
+//    vector<vector<int>> matrix={{1,2,3,4},{5,1,2,3},{9,5,1,2}};
+//    for(int i=0;i<matrix.size()-1;i++){
+//        for(int j=0;j<matrix[0].size()-1;j++){
+//            if(matrix[i][j]!=matrix[i+1][j+1]){
+//                return false;
+//            }
+//        }
+//    }
+//    return true;
+//}
+
+
+//1052. 爱生气的书店老板
+//今天，书店老板有一家店打算试营业 customers.length 分钟。每分钟都有一些顾客（customers[i]）会进入书店，所有这些顾客都会在那一分钟结束后离开。
+//在某些时候，书店老板会生气。 如果书店老板在第 i 分钟生气，那么 grumpy[i] = 1，否则 grumpy[i] = 0。 当书店老板生气时，那一分钟的顾客就会不满意，不生气则他们是满意的。
+//书店老板知道一个秘密技巧，能抑制自己的情绪，可以让自己连续 X 分钟不生气，但却只能使用一次。
+//请你返回这一天营业下来，最多有多少客户能够感到满意的数量
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/grumpy-bookstore-owner
+//int main(){
+//    vector<int> customers={3,8,8,7,1};
+//    vector<int> grumpy = {1,1,1,1,1};
+//    int X=3;
+//    vector<int> a(customers.size());
+//    vector<int> b(customers.size());
+//    a[0]=customers[0];
+//    b[0]=(!grumpy[0])?customers[0]:0;
+//    for(int i=1;i<customers.size();i++){
+//        a[i]=a[i-1]+customers[i];
+//        b[i]=b[i-1]+(!grumpy[i]?customers[i]:0);
+//    }
+//    if(X+1>customers.size()-1){
+//        if(X>=customers.size()-1)
+//            return a[customers.size()-1];
+//        return b[customers.size()-1];
+//    }
+//    int ans=a[X-1]+b[customers.size()-1]-b[X-1];
+//    for(int i=0;i<customers.size()-X;i++){
+//        ans=max(ans,b[i]+a[i+X]-a[i]+b[customers.size()-1]-b[i+X]);
+//    }
+//    ans=max(ans,b[customers.size()-1-X]+a[customers.size()-1]-a[customers.size()-1-X]);
+//    return ans;
+//}
+
+
+//牛客网
+//struct a{
+//    int x;
+//    int y;
+//};
+//
+//bool cmd(a a1,a a2){
+//    if(a1.x*a1.y!=a2.x*a2.y)
+//        return a1.x*a1.y<a2.x*a2.y;
+//    else{
+//        if(a1.x==a1.y){
+//            return 1;
+//        }else if(a2.x==a2.y){
+//            return 0;
+//        } else if(min(double (a1.x)/double(a1.y),double (a1.y)/double (a1.x))!=min(double (a2.x)/double (a2.y),double (a2.y)/double (a2.x)))
+//            return min(double (a1.x)/double(a1.y),double (a1.y)/double (a1.x))>min(double (a2.x)/double (a2.y),double (a2.y)/double (a2.x));
+//        else{
+//            return a1.x>a2.x;
+//        }
+//    }
+//}
+//
+//int main(){
+//    int n;
+//    cin>>n;
+//    a a[n];
+//    for(int i=0;i<n;i++){
+//        cin>>a[i].x>>a[i].y;
+//    }
+//    sort(a,a+n,cmd);
+//    cout<<a[0].x<<" "<<a[0].y;
+//    for(int i=1;i<n;i++){
+//        cout<<' '<<a[i].x<<" "<<a[i].y;
+//    }
+//}
+
+
+//832. 翻转图像
+//给定一个二进制矩阵 A，我们想先水平翻转图像，然后反转图像并返回结果。
+//水平翻转图片就是将图片的每一行都进行翻转，即逆序。例如，水平翻转 [1, 1, 0] 的结果是 [0, 1, 1]。
+//反转图片的意思是图片中的 0 全部被 1 替换， 1 全部被 0 替换。例如，反转 [0, 1, 1] 的结果是 [1, 0, 0]。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/flipping-an-image
+//int main(){
+//    return [(1-i for i in row[::-1]) for row in A]
+//    //pykuaile
+//}
