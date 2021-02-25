@@ -939,3 +939,48 @@ int lcm(int a,int b){
 //    return [list(x) for x in zip(*matrix)]
 //    //py快乐日
 //}
+
+
+//53. 最大子序和
+// 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+//int main(){
+//    vector<int> nums={-2,1,-3,4,-1,2,1,-5,4};
+//    int ans=0;
+//    int tmp=0;
+//    int m = -1000000;
+//    for(int i=0;i<nums.size();i++){
+//        if(tmp+nums[i]<0)
+//            tmp =0;
+//        else
+//        tmp = tmp+nums[i];
+//      ans=max(ans,tmp);
+//      m=max(m,nums[i]);
+//    }
+//    if(m<0)
+//        return m;
+//    return ans;
+//}
+
+
+//461. 汉明距离
+//两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
+//给出两个整数 x 和 y，计算它们之间的汉明距离。
+//注意：
+//0 ≤ x, y < 231.
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/hamming-distance
+//int main(){
+//    int x,y;
+//    x = x^y;
+//    y=0;
+//    while(x>0){
+//        y += x%2;
+//        x/=2;
+//    }
+//    return y;
+//}
+
+
+int main(){
+
+}
