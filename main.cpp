@@ -8,6 +8,15 @@
 #include <algorithm>
 
 using namespace  std;
+
+int gcd(int a,int b)
+{
+    return b>0?gcd(b,a%b):a;
+}
+
+int lcm(int a,int b){
+    return a*b/gcd(a,b);
+}
 // 724. 寻找数组的中心索引 easy
 // 2021年1月28日23点29分
 //int main() {
@@ -221,10 +230,7 @@ using namespace  std;
 //}
 
 //随便写写
-//int gcd(int a,int b)
-//{
-//    return b>0?gcd(b,a%b):a;
-//}
+
 //int main(){
 //    int i;
 //    cin>>i;
@@ -923,4 +929,13 @@ using namespace  std;
 //int main(){
 //    return [(1-i for i in row[::-1]) for row in A]
 //    //pykuaile
+//}
+
+
+//867. 转置矩阵
+//给你一个二维整数数组 matrix， 返回 matrix 的 转置矩阵 。
+//矩阵的 转置 是指将矩阵的主对角线翻转，交换矩阵的行索引与列索引。
+//int main(){
+//    return [list(x) for x in zip(*matrix)]
+//    //py快乐日
 //}
