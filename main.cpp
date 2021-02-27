@@ -980,7 +980,21 @@ int lcm(int a,int b){
 //    return y;
 //}
 
-
+//896. 单调数列
+//如果数组是单调递增或单调递减的，那么它是单调的。
+//如果对于所有 i <= j，A[i] <= A[j]，那么数组 A 是单调递增的。 如果对于所有 i <= j，A[i]> = A[j]，那么数组 A 是单调递减的。
+//当给定的数组 A 是单调数组时返回 true，否则返回 false。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/monotonic-array
 int main(){
-
+    vector<int> A;
+    int a=0,b=0;
+    if(A.size()==1)
+        return true;
+    for(int i=1;i<A.size();i++){
+        if(A[i-1]<A[i])a=1;
+        if(A[i-1]>A[i])b=1;
+    }
+    if(a+b==2)return false;
+    return true;
 }
