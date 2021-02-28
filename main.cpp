@@ -6,6 +6,7 @@
 #include <stack>
 #include <cstdio>
 #include <algorithm>
+#include <bitset>
 
 using namespace  std;
 
@@ -986,15 +987,83 @@ int lcm(int a,int b){
 //当给定的数组 A 是单调数组时返回 true，否则返回 false。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/monotonic-array
+//int main(){
+//    vector<int> A;
+//    int a=0,b=0;
+//    if(A.size()==1)
+//        return true;
+//    for(int i=1;i<A.size();i++){
+//        if(A[i-1]<A[i])a=1;
+//        if(A[i-1]>A[i])b=1;
+//    }
+//    if(a+b==2)return false;
+//    return true;
+//}
+
+
+//int mian(){
+//        vector< vector<string> > items;
+//        string ruleKey;
+//        string ruleValue;
+//        int c=0;
+//        if(ruleKey=="type"){
+//            c=0;
+//        }else if(ruleKey=="color"){
+//            c=1;
+//        }else{
+//            c=2;
+//        }
+//        int ans;
+//        for(int i=0;i<items.size();i++){
+//            if(items[i][c]==ruleValue)
+//                ans++;
+//        }
+//    return ans;
+//};
+
+
+//int main(){
+//    vector<int> nums1;
+//    vector<int> nums2;
+//    int tmp11[6]={0};
+//    int tmp22[6]={0};
+//    int tmp1=0;
+//    int tmp2=0;
+//    for(int i=0;i<nums1.size();i++){
+//        tmp1+=nums1[i];
+//        tmp11[nums1[i]]++;
+//    }
+//    for(int i=0;i<nums2.size();i++){
+//        tmp2+=nums2[i];
+//        tmp22[nums2[i]]++;
+//    }
+//    int tmp = tmp1-tmp2;
+//}
+
+//5690. 最接近目标价格的甜点成本
+//你打算做甜点，现在需要购买配料。目前共有 n 种冰激凌基料和 m 种配料可供选购。而制作甜点需要遵循以下几条规则：
+//必须选择 一种 冰激凌基料。
+//可以添加 一种或多种 配料，也可以不添加任何配料。
+//每种类型的配料 最多两份 。
+//给你以下三个输入：
+//baseCosts ，一个长度为 n 的整数数组，其中每个 baseCosts[i] 表示第 i 种冰激凌基料的价格。
+//toppingCosts，一个长度为 m 的整数数组，其中每个 toppingCosts[i] 表示 一份 第 i 种冰激凌配料的价格。
+//target ，一个整数，表示你制作甜点的目标价格。
+//你希望自己做的甜点总成本尽可能接近目标价格 target 。
+//返回最接近 target 的甜点成本。如果有多种方案，返回 成本相对较低 的一种。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/closest-dessert-cost
 int main(){
-    vector<int> A;
-    int a=0,b=0;
-    if(A.size()==1)
-        return true;
-    for(int i=1;i<A.size();i++){
-        if(A[i-1]<A[i])a=1;
-        if(A[i-1]>A[i])b=1;
+    vector<int> baseCosts;
+    vector<int> toppingCosts;
+    int target;
+    bitset<20005> can;
+    for(auto x:baseCosts) can[x]=1;
+    for(auto x:toppingCosts) can|=can<<x|(can<<(2*x));
+    int ans=-200000;
+    for(int x=0;x<20000;x++){
+     if(can[x]&&abs(x-target)<abs(ans-target))
+         ans=x;
     }
-    if(a+b==2)return false;
-    return true;
+    return ans;
 }
