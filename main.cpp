@@ -1062,17 +1062,53 @@ int lcm(int a,int b){
 //返回最接近 target 的甜点成本。如果有多种方案，返回 成本相对较低 的一种。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/closest-dessert-cost
+//int main(){
+//    vector<int> baseCosts;
+//    vector<int> toppingCosts;
+//    int target;
+//    bitset<20005> can;
+//    for(auto x:baseCosts) can[x]=1;
+//    for(auto x:toppingCosts) can|=can<<x|(can<<(2*x));
+//    int ans=-200000;
+//    for(int x=0;x<20000;x++){
+//     if(can[x]&&abs(x-target)<abs(ans-target))
+//         ans=x;
+//    }
+//    return ans;
+//}
+
+//5691. 通过最少操作次数使数组的和相等
+//给你两个长度可能不等的整数数组 nums1 和 nums2 。两个数组中的所有值都在 1 到 6 之间（包含 1 和 6）。
+//每次操作中，你可以选择 任意 数组中的任意一个整数，将它变成 1 到 6 之间 任意 的值（包含 1 和 6）。
+//请你返回使 nums1 中所有数的和与 nums2 中所有数的和相等的最少操作次数。如果无法使两个数组的和相等，请返回 -1 。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/equal-sum-arrays-with-minimum-number-of-operations
 int main(){
-    vector<int> baseCosts;
-    vector<int> toppingCosts;
-    int target;
-    bitset<20005> can;
-    for(auto x:baseCosts) can[x]=1;
-    for(auto x:toppingCosts) can|=can<<x|(can<<(2*x));
-    int ans=-200000;
-    for(int x=0;x<20000;x++){
-     if(can[x]&&abs(x-target)<abs(ans-target))
-         ans=x;
+    vector<int> a=;
+    vector<int> b;
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    int ans=0;
+    int aa=accumulate(a.begin(),a.end(),0);
+    int bb=accumulate(b.begin(),b.end(),0);
+    if (aa>bb)
+        swap(aa,bb),swap(a,b);
+    int j=0,k=b.size()-1;
+    while(j<a.size()&&k>=0&&aa<bb){
+        if(6-a[j]>b[k]-1){
+            aa+=6-a[j++];
+        }else{
+            bb-=b[k--]-1;
+        }
+        ans++;
     }
-    return ans;
+    while(j<a.size()&&aa<bb){
+        aa+=6-a[j++];
+        ans++;
+    }
+    while(k>=0&&aa<bb){
+        bb-=b[k--]-1;
+        ans++;
+    }
+    return aa>=bb?ans:-1;
 }
