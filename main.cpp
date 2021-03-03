@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <algorithm>
 #include <bitset>
+# include <cstring>
 
 using namespace  std;
 
@@ -1083,32 +1084,221 @@ int lcm(int a,int b){
 //请你返回使 nums1 中所有数的和与 nums2 中所有数的和相等的最少操作次数。如果无法使两个数组的和相等，请返回 -1 。
 //来源：力扣（LeetCode）
 //链接：https://leetcode-cn.com/problems/equal-sum-arrays-with-minimum-number-of-operations
-int main(){
-    vector<int> a=;
-    vector<int> b;
-    sort(a.begin(),a.end());
-    sort(b.begin(),b.end());
-    int ans=0;
-    int aa=accumulate(a.begin(),a.end(),0);
-    int bb=accumulate(b.begin(),b.end(),0);
-    if (aa>bb)
-        swap(aa,bb),swap(a,b);
-    int j=0,k=b.size()-1;
-    while(j<a.size()&&k>=0&&aa<bb){
-        if(6-a[j]>b[k]-1){
-            aa+=6-a[j++];
-        }else{
-            bb-=b[k--]-1;
+//int main(){
+//    vector<int> a=;
+//    vector<int> b;
+//    sort(a.begin(),a.end());
+//    sort(b.begin(),b.end());
+//    int ans=0;
+//    int aa=accumulate(a.begin(),a.end(),0);
+//    int bb=accumulate(b.begin(),b.end(),0);
+//    if (aa>bb)
+//        swap(aa,bb),swap(a,b);
+//    int j=0,k=b.size()-1;
+//    while(j<a.size()&&k>=0&&aa<bb){
+//        if(6-a[j]>b[k]-1){
+//            aa+=6-a[j++];
+//        }else{
+//            bb-=b[k--]-1;
+//        }
+//        ans++;
+//    }
+//    while(j<a.size()&&aa<bb){
+//        aa+=6-a[j++];
+//        ans++;
+//    }
+//    while(k>=0&&aa<bb){
+//        bb-=b[k--]-1;
+//        ans++;
+//    }
+//    return aa>=bb?ans:-1;
+//}
+
+
+//int main(){
+//    int tmp[9][9];
+//    for(int i=0;i<81;i++){
+//        cin>>tmp[i/9][i%9];
+//    }
+//    int ans=0;
+//    for(int i=0;i<9;i++){
+//        vector<int > a(9,0);
+//        for(int j=0;j<9;j++){
+//            a[tmp[i][j]-1]++;
+//        }
+//        for(int q=0;q<9;q++){
+//            if(a[q]==0){
+//                ans++;
+//                break;
+//            }
+//        }
+//    }
+//    for(int i=0;i<9;i++) {
+//        vector<int > a(9,0);
+//        for (int j = 0; j < 9; j++) {
+//            a[tmp[j][i] - 1]++;
+//        }
+//        for (int q = 0; q < 9; q++) {
+//            if (a[q] == 0){
+//                ans++;
+//                break;
+//            }
+//        }
+//    }
+//    vector<int> tmp2={0,3,6,27,30,33,54,57,60};
+//    for(int i:tmp2){
+//        vector<int > a(9,0);
+//        for(int j=0;j<3;j++){
+//            for(int k=0;k<3;k++){
+//                a[tmp[(i+j*9+k)/9][(i+j*9+k)%9]-1]++;
+//            }
+//            for (int q = 0; q < 9; q++) {
+//                if (a[q] == 0){
+//                    ans++;
+//                    break;
+//                }
+//
+//            }
+//        }
+//    }
+//    cout<<ans;
+//}
+
+//int main()
+//{
+//	double eps = 1e-6;
+//	double k;
+//	cin>>k;
+//	double l = 0.0,r,mid;
+//	if (k>=1) r = k;
+//    if (k<1)  r = 1;
+//	while (fabs(l-k/l)>eps)
+//	{
+//		mid = l + (r - l) /2 ;
+//		if (mid<k/mid)
+//		{
+//			l = mid;
+//		}
+//		else {
+//			r = mid;
+//		}
+//	}
+//	printf("%.3f",l);
+//	return 0;
+//}
+
+int searchInsert(int* nums, int numsSize, int target)
+{
+    int dst = 0;
+    while (dst<numsSize)
+    {
+        if (nums[dst] < target)
+        {
+            ++dst;
         }
-        ans++;
+        else
+        {
+            break;
+        }
     }
-    while(j<a.size()&&aa<bb){
-        aa+=6-a[j++];
-        ans++;
-    }
-    while(k>=0&&aa<bb){
-        bb-=b[k--]-1;
-        ans++;
-    }
-    return aa>=bb?ans:-1;
+    return dst;
 }
+//int main(){
+//    int  a[INT16_MAX-1];
+//    int z=0;
+//    int number;
+//    while (1) {
+//        cin >> number;
+//        a[z]=number;//每输入一个数字就把它添加到数组的最后
+//        if (cin.get() == '\n')//如果是回车符则跳出循环
+//            break;
+//    }
+//
+//    int t;
+//    cin>>t;
+//    cout<<searchInsert(a,z,t);
+//}
+
+
+
+//int main()
+//{
+//    string str, res;
+//    cin >> str;
+//    int index;
+//    if(str.size()>2){
+//        for (int i = 1; i < str.size(); i++) {
+//            if (str.substr(0, i) == str.substr(str.size() - i, i))
+//                index = i;
+//        }
+//        cout << str + str.substr(index, str.size() - index);
+//    }
+//    else{
+//        if(str.size()==1){
+//            cout<<str;
+//        }else{
+//            if(str[0]==str[1]){
+//                cout<<str;
+//            }else{
+//                cout<<str<<str;
+//            }
+//        }
+//    }
+//
+//}
+
+
+//304. 二维区域和检索 - 矩阵不可变
+//给定一个二维矩阵，计算其子矩形范围内元素的总和，该子矩阵的左上角为 (row1, col1) ，右下角为 (row2, col2) 。
+//上图子矩阵左上角 (row1, col1) = (2, 1) ，右下角(row2, col2) = (4, 3)，该子矩形内元素的总和为 8。
+//来源：力扣（LeetCode）
+//链接：https://leetcode-cn.com/problems/range-sum-query-2d-immutable
+//class NumMatrix {
+//public:
+//    vector<vector<int>> sum;
+//    NumMatrix(vector<vector<int>>& matrix) {
+//        if(matrix.size()==0 || matrix[0].size()==0){
+//            return ;
+//        }
+//        sum = vector<vector<int>>(matrix);
+//        for(int i=1;i<matrix.size();i++){
+//            sum[i][0] += sum[i-1][0];
+//        }
+//        for(int j=1;j<matrix[0].size();j++){
+//            sum[0][j] += sum[0][j-1];
+//        }
+//        for(int i=1;i<matrix.size();i++){
+//            for(int j=1;j<matrix[0].size();j++){
+//                sum[i][j] += sum[i-1][j]+sum[i][j-1]-sum[i-1][j-1];
+//            }
+//        }
+//    }
+//
+//    int sumRegion(int row1, int col1, int row2, int col2) {
+//        if(row1==0 && col1==0){
+//            return sum[row2][col2];
+//        }
+//        else if(col1==0){
+//            return sum[row2][col2] - sum[row1-1][col2];
+//        }
+//        else if(row1==0){
+//            return sum[row2][col2] - sum[row2][col1-1];
+//        }
+//
+//        return sum[row2][col2] - sum[row1-1][col2] -sum[row2][col1-1] +sum[row1-1][col1-1];
+//    }
+//};
+
+
+//338. 比特位计数
+//给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
+//int main(){
+//    int num;
+//    vector<int > ans(num+1,0);
+//    for(int i=0;i<num+1;i++){
+//        ans[i]=ans[i>>1]+(i&1);
+//    }
+//    return ans;
+//}
+
+
