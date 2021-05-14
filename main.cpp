@@ -7,7 +7,7 @@
 #include <cstdio>
 #include <algorithm>
 #include <bitset>
-# include <cstring>
+#include <cstring>
 #include <set>
 #include <string>
 #include <sstream>
@@ -1779,6 +1779,18 @@ void insertionSort(vector<T> &a) {
     }
 }
 
+template<typename T>
+void insertionSort(vector<T> &a, int l, int r) {
+    for (int i = l + 1; i <= r; i++) {
+        T temp = a[i];
+        int j;
+        for (j = i - 1; j > 0 && temp < a[j]; j--) {
+            a[j + 1] = a[j];
+        }
+        a[j] = temp;
+    }
+}
+
 //归并排序
 template<typename T>
 void __merge(vector<T> &a, int l, int mid, int r) {
@@ -1814,10 +1826,14 @@ void __mergeSort(vector<T> &a, int l, int r) {
     if (l >= r) {
         return;
     }
-    int mid = l/2+ r/2;
+//    if(r - l <=15){
+//        insertionSort(a,l,r);
+//        return;
+//    }
+    int mid = l / 2 + r / 2;
     __mergeSort(a, l, mid);
     __mergeSort(a, mid + 1, r);
-    if(a[mid]>a[mid+1])
+    if (a[mid] > a[mid + 1])
         __merge(a, l, mid, r);
 }
 
@@ -1827,11 +1843,110 @@ void mergeSort(vector<T> &a) {
 }
 
 template<typename T>
-void mergeSortBU(vector<T> &a){
-    for(int sz = 1 ;sz<=a.size()-1;sz+=sz){
-        for(int i=0;(i+sz)<(a.size()-1);i+=sz+sz)
-            __merge(a , i ,i+sz-1,(i+2*sz-1)<(a.size()-1)?(i+2*sz-1):(a.size()-1));
+void mergeSortBU(vector<T> &a) {
+    for (int sz = 1; sz <= a.size() - 1; sz += sz) {
+        for (int i = 0; (i + sz) < (a.size() - 1); i += sz + sz)
+            __merge(a, i, i + sz - 1, (i + 2 * sz - 1) < (a.size() - 1) ? (i + 2 * sz - 1) : (a.size() - 1));
     }
+}
+
+//快速排序
+template<typename T>
+int __partition(vector<T> &a, int l, int r) {
+    swap(a[l], a[rand() % (r - l + 1) + l]);
+    int j = l;
+    for (int i = l + 1; i <= r; i++) {
+        if (a[i] < a[l]) {
+            swap(a[++j], a[i]);
+        }
+    }
+    swap(a[l], a[j]);
+    return j;
+}
+
+template<typename T>
+void __quickSort(vector<T> &a, int l, int r) {
+//    if( l >= r)
+//        return ;
+    if (r - l <= 15) {
+        insertionSort(a, l, r);
+        return;
+    }
+    int p = __partition(a, l, r);
+    __quickSort(a, l, p - 1);
+    __quickSort(a, p + 1, r);
+}
+
+template<typename T>
+void quickSort(vector<T> &a) {
+    srand(time(NULL));
+    __quickSort(a, 0, a.size() - 1);
+}
+
+template<typename T>
+int __partition2(vector<T> &a, int l, int r) {
+    swap(a[l], a[rand() % (r - l + 1) + l]);
+    int i = l + 1, j = r;
+    while (true) {
+        while (i <= r && a[i] < a[l]) i++;
+        while (j >= l + 1 && a[j] > a[l]) j--;
+        if (i > j) break;
+        swap(a[i], a[j]);
+        i++;
+        j--;
+    }
+    swap(a[l], a[j]);
+    return j;
+}
+
+template<typename T>
+void __quickSort2(vector<T> &a, int l, int r) {
+//    if( l >= r)
+//        return ;
+    if (r - l <= 15) {
+        insertionSort(a, l, r);
+        return;
+    }
+    int p = __partition2(a, l, r);
+    __quickSort2(a, l, p - 1);
+    __quickSort2(a, p + 1, r);
+}
+
+template<typename T>
+void quickSort2(vector<T> &a) {
+    srand(time(NULL));
+    __quickSort2(a, 0, a.size() - 1);
+}
+
+template<typename T>
+void __quickSort3Ways(vector<T> &a, int l, int r) {
+//    if( l >= r)
+//        return ;
+    if (r - l <= 15) {
+        insertionSort(a, l, r);
+        return;
+    }
+
+    swap(a[l], a[rand() % (r - l + 1) + l]);
+    int lt=l;
+    int gt=r+1;
+    int i=l+1;
+
+    while(i<gt){
+        if(a[i]<a[l]) swap(a[++lt],a[i++]);
+        else if(a[i]>a[l]) swap(a[--gt],a[i]);
+        else i++;
+    }
+    swap(a[l],a[lt]);
+
+    __quickSort3Ways(a, l, lt-1);
+    __quickSort3Ways(a, gt, r);
+}
+
+template<typename T>
+void quickSort3Ways(vector<T> &a) {
+    srand(time(NULL));
+    __quickSort3Ways(a, 0, a.size() - 1);
 }
 
 class Student {
@@ -1855,6 +1970,7 @@ public:
 
 };
 
+
 int main() {
     vector<int> a = {6, 5, 4, 3, 2, 1};
     vector<double> b = {6.6, 5.5, 4.4, 3.3, 2.2, 1.1};
@@ -1865,16 +1981,20 @@ int main() {
                                {"bcd", 2},
                                {"bcd", 1},
                                {"bcd", 0}};
-//    vector<int> c = SortTestHelper::generateRandomArray<int>(1000, 0, 1010);
+    vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
 //    vector<int> d = {c.begin(), c.end()};
-    vector<int> e = SortTestHelper::generateNearlyOrderedArray<int>(50000, 10);
+//    vector<int> e = SortTestHelper::generateNearlyOrderedArray<int>(50000, 10);
     vector<int> f = {e.begin(), e.end()};
     vector<int> j = {e.begin(), e.end()};
     // 选择排序
 //    SortTestHelper::testSort("selectionSort", selectionSort, e);
     // 插入排序
-    SortTestHelper::testSort("insertionSort", insertionSort, f);
+//    SortTestHelper::testSort("insertionSort", insertionSort, f);
     // 归并排序
-    SortTestHelper::testSort("mergeSort",mergeSort,j);
-    SortTestHelper::testSort("mergeSortBU",mergeSortBU,j);
+//    SortTestHelper::testSort("mergeSort",mergeSort,f);
+//    SortTestHelper::testSort("mergeSortBU",mergeSortBU,j);
+    // 快速排序
+//    SortTestHelper::testSort("quickSort", quickSort, j);
+//    SortTestHelper::testSort("quickSort2", quickSort2, f);
+    SortTestHelper::testSort("quickSort3", quickSort3Ways, e);
 }
