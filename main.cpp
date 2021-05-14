@@ -8,16 +8,38 @@
 #include <algorithm>
 #include <bitset>
 # include <cstring>
+#include <set>
+#include <string>
+#include <sstream>
+#include <limits>
+#include "SortTestHelper.h"
 
-using namespace  std;
 
-int gcd(int a,int b)
-{
-    return b>0?gcd(b,a%b):a;
+#define INF 0x3f3f3f3f
+#define pb push_back
+using LL = long long;
+using pii = pair<int, int>;
+
+inline int lowbit(int x) { return x & (-x); }
+
+template<typename A>
+inline A __lcm(A a, A b) { return a / __gcd(a, b) * b; }
+
+template<typename A, typename B, typename C>
+inline A fpow(A x, B p, C lyd) {
+    A ans = 1;
+    for (; p; p >>= 1, x = 1LL * x * x % lyd)if (p & 1)ans = 1LL * x * ans % lyd;
+    return ans;
 }
 
-int lcm(int a,int b){
-    return a*b/gcd(a,b);
+using namespace std;
+
+int gcd(int a, int b) {
+    return b > 0 ? gcd(b, a % b) : a;
+}
+
+int lcm(int a, int b) {
+    return a * b / gcd(a, b);
 }
 // 724. 寻找数组的中心索引 easy
 // 2021年1月28日23点29分
@@ -1187,22 +1209,22 @@ int lcm(int a,int b){
 //	return 0;
 //}
 
-int searchInsert(int* nums, int numsSize, int target)
-{
-    int dst = 0;
-    while (dst<numsSize)
-    {
-        if (nums[dst] < target)
-        {
-            ++dst;
-        }
-        else
-        {
-            break;
-        }
-    }
-    return dst;
-}
+//int searchInsert(int* nums, int numsSize, int target)
+//{
+//    int dst = 0;
+//    while (dst<numsSize)
+//    {
+//        if (nums[dst] < target)
+//        {
+//            ++dst;
+//        }
+//        else
+//        {
+//            break;
+//        }
+//    }
+//    return dst;
+//}
 //int main(){
 //    int  a[INT16_MAX-1];
 //    int z=0;
@@ -1302,3 +1324,557 @@ int searchInsert(int* nums, int numsSize, int target)
 //}
 
 
+//std::string to_string(int a){
+//    stringstream ss;
+//    ss << a;
+//    std::string ans;
+//    ss>>ans;
+//    return ans;
+//}
+//
+//class NACKStringBuilder
+//{
+//public:
+//    NACKStringBuilder();
+//    ~NACKStringBuilder();
+//
+//    void PushNACK(uint16_t nack);
+//    std::string GetResult();
+//
+//private:
+//    priority_queue <int,vector<int>,greater<int> > NackQueue;
+//};
+//
+//NACKStringBuilder::NACKStringBuilder() {}
+//
+//NACKStringBuilder::~NACKStringBuilder() {}
+//
+//void NACKStringBuilder::PushNACK(uint16_t nack) {
+//    NackQueue.push(nack);
+//}
+//
+//
+//
+//std::string NACKStringBuilder::GetResult() {
+//    int tmp;
+//    std::string ansString="";
+//    int flag=0;
+//    if(!NackQueue.empty()){
+//        tmp=NackQueue.top();
+//        NackQueue.pop();
+//        ansString += to_string(tmp);
+//        while(!NackQueue.empty()){
+//            if(NackQueue.top()!=tmp+1){
+//                if(flag){
+//                    ansString+='-';
+//                    ansString+=to_string(tmp);
+//                }
+//                ansString+=',';
+//                tmp=NackQueue.top();
+//                ansString+=to_string(NackQueue.top());
+//                NackQueue.pop();
+//                flag=0;
+//            }else{
+//                flag = 1
+//                tmp=NackQueue.top();
+//                NackQueue.pop();
+//            }
+//        }
+//        if(flag){
+//            ansString+='-';
+//            ansString+=to_string(tmp);
+//        }
+//    }
+//    return ansString;
+//}
+//int main(){
+//    NACKStringBuilder builder;
+//    builder.PushNACK(5);
+//    builder.PushNACK(7);
+//    builder.PushNACK(9);
+//    builder.PushNACK(10);
+//    builder.PushNACK(11);
+//    builder.PushNACK(12);
+//    builder.PushNACK(15);
+//    builder.PushNACK(18);
+//    builder.PushNACK(19);
+//    cout<<builder.GetResult();
+//}
+
+//void rotationMatrix(vector<vector<int>>& matrix) {
+//    int n = matrix.size();
+//    for(int i = 0; i < n / 2; i++)
+//        matrix[i].swap(matrix[n - 1 - i]);
+//    for(int i = 0; i < n; i++) {
+//        for(int j = i; j < n; j++) {
+//            swap(matrix[i][j], matrix[j][i]);
+//        }
+//    }
+//}
+//int main(){
+//    int m=0,n=0;
+//    cin>>m>>n;
+//    vector<vector<int>> matrix{{1,2,3},{4,5,6},{7,8,9}};
+//    rotationMatrix(matrix);
+//    for(int j=0;j<m;j++){
+//        for(int k=0;k<n;k++){
+//            cout<<matrix[j][k]<<" ";
+//        }
+//        cout<<endl;
+//    }
+//}
+
+//struct z{
+//    int x;
+//    int y;
+//};
+//
+//int main(){
+//    vector<vector<int>> matrix;
+//    int m=matrix.size();
+//    int n=matrix[0].size();
+//    int a[m][n];
+//    queue<z> po;
+//    for(int i=0;i<m;i++)
+//    {
+//        a[i][0]=1;
+//        a[i][n-1]=1;
+//        z tmp;
+//        tmp.x=i;
+//        tmp.y=0;
+//        po.push(tmp);
+//        tmp.x=i;
+//        tmp.y=n-1;
+//        po.push(tmp);
+//    }
+//    for(int i=0;i<n;i++){
+//        a[0][i]=1;
+//        a[m-1][i]=1;
+//        z tmp;
+//        tmp.x=0;
+//        tmp.y=i;
+//        po.push(tmp);
+//        tmp.x=m-1;
+//        tmp.y=i;
+//        po.push(tmp);
+//    }
+//    while(!po.empty()){
+//        z tmp;
+//        tmp=po.back();
+//
+//        if()
+//    }
+//
+//}
+
+
+/*
+给双向有序（v从小到大排列）链表插入节点。
+*/
+//struct Node {
+//    int v;
+//    struct Node* prev;
+//    struct Node* next;
+//};
+//
+//int insert(struct Node** head,int v) {
+//    struct Node* tmp = *head;
+//    struct Node tmp2;
+//    tmp2.v=v;
+//    if(tmp->v>v){
+//        tmp2.prev= nullptr;
+//        tmp2.next=tmp;
+//        tmp->prev=&tmp2;
+//        *head = &tmp2;
+//    }
+//    while(!(tmp->v<v&&tmp->next->v>v)||tmp->next== nullptr){
+//           tmp=tmp->next;
+//    }
+//    if(tmp->next!= nullptr){
+//        tmp2.prev=tmp;
+//        tmp2.next=tmp->next;
+//        tmp->next->prev=&tmp2;
+//        tmp->next=&tmp2;
+//    }else{
+//        tmp2.next= nullptr;
+//        tmp2.prev=tmp;
+//        tmp->next=&tmp2;
+//    }
+//    return v;
+//};
+//
+//int search(int* array ,int count,int v){
+//
+//}
+
+
+//int main(){
+//    map<int ,int> a;
+//    string q;
+//    cin>>q;
+//    if(q==" "){
+//        cout<<"";
+//        return 0;
+//    }
+//    for(int i=0;i<q.size();i++){
+//        if(a[q[i]] == 2){
+//            continue;
+//        }else if(a[q[i]]==1){
+//            a[q[i]]++;
+//        }else{
+//            a[q[i]]=1;
+//        }
+//    }
+//    int i=0;
+//    for(i=0;i<q.size();i++){
+//        if(a[q[i]]==1){
+//            cout<<q[i];
+//            break;
+//        }
+//    }
+//    if(i == q.size())
+//        cout<<"";
+//}
+
+//int main(){
+//    int n;
+//    cin>>n;
+//    vector<int> a(n);
+//    for(int i=0;i<n;i++){
+//        cin>>a[i];
+//    }
+//    sort(a.begin(),a.end());
+//    int ans=0;
+//    for(int i=1;i<n;i++){
+//        ans+=a[i];
+//    }
+//    if(n%2==1)
+//        ans+=a[0];
+//    cout<<ans;
+//}
+
+
+//int main()
+//{
+//    int i, n, num[1000], a, b, c, d;
+//    while(cin>>n)
+//    {
+//        for(i=0; i<n; i++) {
+//            cin >> num[i];
+//        }
+//        sort(num, num + n);
+//        int ans = 0;
+//        while(n >= 4)
+//        {
+//            a = num[0];
+//            b = num[1];
+//            c = num[n - 2];
+//            d = num[n - 1];
+//            if(2 * b < a + c)
+//            {
+//                ans+=2*b+a+d;
+//                n-=2;
+//            }
+//            else
+//            {
+//                ans+=a*2+c+d;
+//                n-=2;
+//            }
+//        }
+//        if(n == 3) {
+//            ans+=num[0]+num[1]+num[2];
+//        }
+//        else if (n<=2) {
+//            ans+=num[n-1];
+//        }
+//        cout<<ans;
+//    }
+//    return 0;
+//}
+
+//int main(){
+//    vector<int> encoded={3,1};
+//    int a=0;
+//    for(int i=1;i<=encoded.size()+1;i++){
+//        a=a^i;
+//    }
+//    for(int i=0;i<encoded.size();i+=2){
+//        a=a^encoded[i];
+//    }
+//    vector<int> code(encoded.size()+1,0);
+//    code[encoded.size()] = a;
+//    for(int i=encoded.size()-1;i>=0;i--){
+//        code[i]=encoded[i]^code[i+1];
+//    }
+//    for(int i=0;i<code.size();i++){
+//        cout<<code[i]<<" ";
+//    }
+//}
+
+//int main(){
+//    vector<int> arr={1,3,4,8};
+//    vector<vector<int>> queries={{0,1},{1,2},{0,3},{3,3}};
+//
+//    vector<int> a(arr.size());
+//    a[0]=0^arr[0];
+//    for(int i=1;i<arr.size();i++){
+//        a[i]=a[i-1]^arr[i];
+//    }
+//    vector<int> ans;
+//    for(int i=0;i<queries.size();i++){
+//        if(queries[i][0]>=1)
+//            ans.push_back(a[queries[i][1]]^a[queries[i][0]-1]);
+//        else
+//            ans.push_back(a[queries[i][1]]);
+//    }
+//    for(int i=0;i<queries.size();i++)
+//        cout<<ans[i];
+//}
+
+//struct z{
+//    int be;
+//    int ed;
+//    int jz;
+//};
+//bool cmd(z a1,z a2){
+//    return a1.ed>a2.ed;
+//}
+//
+//int dfs(int n,z a[],int index){
+//    vector<int> ans;
+//    for(int i=index+1;i<n;i++){
+//           if(a[i].ed<=a[index].be){
+//                ans.push_back(dfs(n,a,i));
+//           }
+//       }
+//    sort(ans.begin(),ans.end());
+//    if(ans.size()!=0)
+//        return ans[ans.size()-1]+a[index].jz;
+//    else
+//        return a[index].jz;
+//}
+//
+//int main(){
+//    int n;
+//    cin>>n;
+//    z a[n];
+//    for(int j=0;j<n;j++){
+//        cin>>a[j].be;
+//    }
+//    for(int j=0;j<n;j++){
+//        cin>>a[j].ed;
+//    }
+//    for(int j=0;j<n;j++){
+//        cin>>a[j].jz;
+//    }
+//    sort(a,a+n,cmd);
+//    vector<int> ans;
+//    for(int i=0;i<n;i++){
+//        ans.push_back(dfs(n,a,i));
+//    }
+//    sort(ans.begin(),ans.end());
+//    cout<<ans[ans.size()-1];
+//}
+
+
+
+
+///*请完成下面这个函数，实现题目要求的功能
+//当然，你也可以不按照下面这个模板来作答，完全按照自己的想法来 ^-^
+//******************************开始写代码******************************/
+//const int N = 1005;
+//int res;
+//bool vis[N];
+//int he[N];
+//void dfs(int k, int index, vector<int>& scores, vector<int>& cards, int sum){
+//    if(k == cards.size()){
+//        res = max(res, sum);
+//        return;
+//    }
+//    for(int i = 0; i < cards.size(); i ++){
+//        if(vis[i] || index + cards[i] >= scores.size()) continue;
+//        vis[i] = true;
+//        if(res>sum+he[scores.size()]-he[index+1])
+//            break;
+//        dfs(k + 1, index + cards[i], scores, cards, sum + scores[index + cards[i]]);
+//        res = max(res, sum + scores[cards[i] + index]);
+//        vis[i] = false;
+//    }
+//}
+//
+//int procee(vector <int> scores, vector <int> cards) {
+//
+//    he[0]=scores[0];
+//    for(int i=1;i<scores.size();i++){
+//        he[i]=he[i-1]+scores[i];
+//    }
+//    res = scores[0];
+//    dfs(0, 0, scores, cards, scores[0]);
+//
+//    return res;
+//}
+///******************************结束写代码******************************/
+//
+//
+//int main() {
+//    int res;
+//
+//    int _scores_size = 0;
+//    cin >> _scores_size;
+//    cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+//    vector<int> _scores;
+//    int _scores_item;
+//    for(int _scores_i=0; _scores_i<_scores_size; _scores_i++) {
+//        cin >> _scores_item;
+//        cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+//        _scores.push_back(_scores_item);
+//    }
+//
+//
+//
+//    int _cards_size = 0;
+//    cin >> _cards_size;
+//    cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+//    vector<int> _cards;
+//    int _cards_item;
+//    for(int _cards_i=0; _cards_i<_cards_size; _cards_i++) {
+//        cin >> _cards_item;
+//        cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+//        _cards.push_back(_cards_item);
+//    }
+//    res = procee(_scores, _cards);
+//    cout << res << endl;
+//
+//    return 0;
+//
+//}
+
+// 排序算法bobobo
+// 选择排序
+template<typename T>
+void selectionSort(vector<T> &a) {
+    if (a.size() == 0)
+        return;
+    for (int i = 0; i < a.size(); i++) {
+        int min = i;
+        for (int j = i + 1; j < a.size(); j++) {
+            if (a[j] < a[min]) {
+                min = j;
+            }
+        }
+        swap(a[min], a[i]);
+    }
+}
+
+//插入排序
+template<typename T>
+void insertionSort(vector<T> &a) {
+    for (int i = 1; i < a.size(); i++) {
+        T temp = a[i];
+        int j;
+        for (j = i - 1; j > 0 && temp < a[j]; j--) {
+            a[j + 1] = a[j];
+        }
+        a[j] = temp;
+    }
+}
+
+//归并排序
+template<typename T>
+void __merge(vector<T> &a, int l, int mid, int r) {
+    vector<T> aux(r - l + 1);
+    for (int i = l; i <= r; i++) {
+        aux[i - l] = a[i];
+    }
+    int i = l;
+    int j = mid + 1;
+    for (int k = l; k <= r; k++) {
+        if (i > mid) {
+            a[k] = aux[j - l];
+            j++;
+            continue;
+        } else if (j > r) {
+            a[k] = aux[i - l];
+            i++;
+            continue;
+        }
+        if (aux[i - l] < aux[j - l]) {
+            a[k] = aux[i - l];
+            i++;
+        } else {
+            a[k] = aux[j - l];
+            j++;
+        }
+    }
+
+}
+
+template<typename T>
+void __mergeSort(vector<T> &a, int l, int r) {
+    if (l >= r) {
+        return;
+    }
+    int mid = l/2+ r/2;
+    __mergeSort(a, l, mid);
+    __mergeSort(a, mid + 1, r);
+    if(a[mid]>a[mid+1])
+        __merge(a, l, mid, r);
+}
+
+template<typename T>
+void mergeSort(vector<T> &a) {
+    __mergeSort(a, 0, a.size() - 1);
+}
+
+template<typename T>
+void mergeSortBU(vector<T> &a){
+    for(int sz = 1 ;sz<=a.size()-1;sz+=sz){
+        for(int i=0;(i+sz)<(a.size()-1);i+=sz+sz)
+            __merge(a , i ,i+sz-1,(i+2*sz-1)<(a.size()-1)?(i+2*sz-1):(a.size()-1));
+    }
+}
+
+class Student {
+public:
+    string name;
+    int score;
+
+    Student(string name, int score) {
+        this->score = score;
+        this->name = name;
+    }
+
+    bool operator<(const Student &otherStudent) const {
+        return score < otherStudent.score;
+    }
+
+    friend ostream &operator<<(ostream &os, const Student &student) {
+        os << "Student: " << student.name << " " << student.score << endl;
+        return os;
+    }
+
+};
+
+int main() {
+    vector<int> a = {6, 5, 4, 3, 2, 1};
+    vector<double> b = {6.6, 5.5, 4.4, 3.3, 2.2, 1.1};
+    vector<Student> student = {{"abc", 6},
+                               {"bcd", 5},
+                               {"bcd", 4},
+                               {"bcd", 3},
+                               {"bcd", 2},
+                               {"bcd", 1},
+                               {"bcd", 0}};
+//    vector<int> c = SortTestHelper::generateRandomArray<int>(1000, 0, 1010);
+//    vector<int> d = {c.begin(), c.end()};
+    vector<int> e = SortTestHelper::generateNearlyOrderedArray<int>(50000, 10);
+    vector<int> f = {e.begin(), e.end()};
+    vector<int> j = {e.begin(), e.end()};
+    // 选择排序
+//    SortTestHelper::testSort("selectionSort", selectionSort, e);
+    // 插入排序
+    SortTestHelper::testSort("insertionSort", insertionSort, f);
+    // 归并排序
+    SortTestHelper::testSort("mergeSort",mergeSort,j);
+    SortTestHelper::testSort("mergeSortBU",mergeSortBU,j);
+}
