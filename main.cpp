@@ -13,6 +13,7 @@
 #include <sstream>
 #include <limits>
 #include "SortTestHelper.h"
+#include "Heap.h"
 
 
 #define INF 0x3f3f3f3f
@@ -1749,252 +1750,317 @@ int lcm(int a, int b) {
 //
 //}
 
-// 排序算法bobobo
-// 选择排序
-template<typename T>
-void selectionSort(vector<T> &a) {
-    if (a.size() == 0)
-        return;
-    for (int i = 0; i < a.size(); i++) {
-        int min = i;
-        for (int j = i + 1; j < a.size(); j++) {
-            if (a[j] < a[min]) {
-                min = j;
-            }
-        }
-        swap(a[min], a[i]);
-    }
-}
-
-//插入排序
-template<typename T>
-void insertionSort(vector<T> &a) {
-    for (int i = 1; i < a.size(); i++) {
-        T temp = a[i];
-        int j;
-        for (j = i - 1; j > 0 && temp < a[j]; j--) {
-            a[j + 1] = a[j];
-        }
-        a[j] = temp;
-    }
-}
-
-template<typename T>
-void insertionSort(vector<T> &a, int l, int r) {
-    for (int i = l + 1; i <= r; i++) {
-        T temp = a[i];
-        int j;
-        for (j = i - 1; j > 0 && temp < a[j]; j--) {
-            a[j + 1] = a[j];
-        }
-        a[j] = temp;
-    }
-}
-
-//归并排序
-template<typename T>
-void __merge(vector<T> &a, int l, int mid, int r) {
-    vector<T> aux(r - l + 1);
-    for (int i = l; i <= r; i++) {
-        aux[i - l] = a[i];
-    }
-    int i = l;
-    int j = mid + 1;
-    for (int k = l; k <= r; k++) {
-        if (i > mid) {
-            a[k] = aux[j - l];
-            j++;
-            continue;
-        } else if (j > r) {
-            a[k] = aux[i - l];
-            i++;
-            continue;
-        }
-        if (aux[i - l] < aux[j - l]) {
-            a[k] = aux[i - l];
-            i++;
-        } else {
-            a[k] = aux[j - l];
-            j++;
-        }
-    }
-
-}
-
-template<typename T>
-void __mergeSort(vector<T> &a, int l, int r) {
-    if (l >= r) {
-        return;
-    }
-//    if(r - l <=15){
-//        insertionSort(a,l,r);
+//// 排序算法bobobo
+//// 选择排序
+//template<typename T>
+//void selectionSort(vector<T> &a) {
+//    if (a.size() == 0)
+//        return;
+//    for (int i = 0; i < a.size(); i++) {
+//        int min = i;
+//        for (int j = i + 1; j < a.size(); j++) {
+//            if (a[j] < a[min]) {
+//                min = j;
+//            }
+//        }
+//        swap(a[min], a[i]);
+//    }
+//}
+//
+////插入排序
+//template<typename T>
+//void insertionSort(vector<T> &a) {
+//    for (int i = 1; i < a.size(); i++) {
+//        T temp = a[i];
+//        int j;
+//        for (j = i - 1; j > 0 && temp < a[j]; j--) {
+//            a[j + 1] = a[j];
+//        }
+//        a[j] = temp;
+//    }
+//}
+//
+//template<typename T>
+//void insertionSort(vector<T> &a, int l, int r) {
+//    for (int i = l + 1; i <= r; i++) {
+//        T temp = a[i];
+//        int j;
+//        for (j = i - 1; j > 0 && temp < a[j]; j--) {
+//            a[j + 1] = a[j];
+//        }
+//        a[j] = temp;
+//    }
+//}
+//
+////归并排序
+//template<typename T>
+//void __merge(vector<T> &a, int l, int mid, int r) {
+//    vector<T> aux(r - l + 1);
+//    for (int i = l; i <= r; i++) {
+//        aux[i - l] = a[i];
+//    }
+//    int i = l;
+//    int j = mid + 1;
+//    for (int k = l; k <= r; k++) {
+//        if (i > mid) {
+//            a[k] = aux[j - l];
+//            j++;
+//            continue;
+//        } else if (j > r) {
+//            a[k] = aux[i - l];
+//            i++;
+//            continue;
+//        }
+//        if (aux[i - l] < aux[j - l]) {
+//            a[k] = aux[i - l];
+//            i++;
+//        } else {
+//            a[k] = aux[j - l];
+//            j++;
+//        }
+//    }
+//
+//}
+//
+//template<typename T>
+//void __mergeSort(vector<T> &a, int l, int r) {
+//    if (l >= r) {
 //        return;
 //    }
-    int mid = l / 2 + r / 2;
-    __mergeSort(a, l, mid);
-    __mergeSort(a, mid + 1, r);
-    if (a[mid] > a[mid + 1])
-        __merge(a, l, mid, r);
-}
+////    if(r - l <=15){
+////        insertionSort(a,l,r);
+////        return;
+////    }
+//    int mid = l / 2 + r / 2;
+//    __mergeSort(a, l, mid);
+//    __mergeSort(a, mid + 1, r);
+//    if (a[mid] > a[mid + 1])
+//        __merge(a, l, mid, r);
+//}
+//
+//template<typename T>
+//void mergeSort(vector<T> &a) {
+//    __mergeSort(a, 0, a.size() - 1);
+//}
+//
+//template<typename T>
+//void mergeSortBU(vector<T> &a) {
+//    for (int sz = 1; sz <= a.size() - 1; sz += sz) {
+//        for (int i = 0; (i + sz) < (a.size() - 1); i += sz + sz)
+//            __merge(a, i, i + sz - 1, (i + 2 * sz - 1) < (a.size() - 1) ? (i + 2 * sz - 1) : (a.size() - 1));
+//    }
+//}
+//
+////快速排序
+//template<typename T>
+//int __partition(vector<T> &a, int l, int r) {
+//    swap(a[l], a[rand() % (r - l + 1) + l]);
+//    int j = l;
+//    for (int i = l + 1; i <= r; i++) {
+//        if (a[i] < a[l]) {
+//            swap(a[++j], a[i]);
+//        }
+//    }
+//    swap(a[l], a[j]);
+//    return j;
+//}
+//
+//template<typename T>
+//void __quickSort(vector<T> &a, int l, int r) {
+////    if( l >= r)
+////        return ;
+//    if (r - l <= 15) {
+//        insertionSort(a, l, r);
+//        return;
+//    }
+//    int p = __partition(a, l, r);
+//    __quickSort(a, l, p - 1);
+//    __quickSort(a, p + 1, r);
+//}
+//
+//template<typename T>
+//void quickSort(vector<T> &a) {
+//    srand(time(NULL));
+//    __quickSort(a, 0, a.size() - 1);
+//}
+//
+//template<typename T>
+//int __partition2(vector<T> &a, int l, int r) {
+//    swap(a[l], a[rand() % (r - l + 1) + l]);
+//    int i = l + 1, j = r;
+//    while (true) {
+//        while (i <= r && a[i] < a[l]) i++;
+//        while (j >= l + 1 && a[j] > a[l]) j--;
+//        if (i > j) break;
+//        swap(a[i], a[j]);
+//        i++;
+//        j--;
+//    }
+//    swap(a[l], a[j]);
+//    return j;
+//}
+//
+//template<typename T>
+//void __quickSort2(vector<T> &a, int l, int r) {
+////    if( l >= r)
+////        return ;
+//    if (r - l <= 15) {
+//        insertionSort(a, l, r);
+//        return;
+//    }
+//    int p = __partition2(a, l, r);
+//    __quickSort2(a, l, p - 1);
+//    __quickSort2(a, p + 1, r);
+//}
+//
+//template<typename T>
+//void quickSort2(vector<T> &a) {
+//    srand(time(NULL));
+//    __quickSort2(a, 0, a.size() - 1);
+//}
+//
+//template<typename T>
+//void __quickSort3Ways(vector<T> &a, int l, int r) {
+////    if( l >= r)
+////        return ;
+//    if (r - l <= 15) {
+//        insertionSort(a, l, r);
+//        return;
+//    }
+//
+//    swap(a[l], a[rand() % (r - l + 1) + l]);
+//    int lt=l;
+//    int gt=r+1;
+//    int i=l+1;
+//
+//    while(i<gt){
+//        if(a[i]<a[l]) swap(a[++lt],a[i++]);
+//        else if(a[i]>a[l]) swap(a[--gt],a[i]);
+//        else i++;
+//    }
+//    swap(a[l],a[lt]);
+//
+//    __quickSort3Ways(a, l, lt-1);
+//    __quickSort3Ways(a, gt, r);
+//}
+//
+//template<typename T>
+//void quickSort3Ways(vector<T> &a) {
+//    srand(time(NULL));
+//    __quickSort3Ways(a, 0, a.size() - 1);
+//}
+//
+//class Student {
+//public:
+//    string name;
+//    int score;
+//
+//    Student(string name, int score) {
+//        this->score = score;
+//        this->name = name;
+//    }
+//
+//    bool operator<(const Student &otherStudent) const {
+//        return score < otherStudent.score;
+//    }
+//
+//    friend ostream &operator<<(ostream &os, const Student &student) {
+//        os << "Student: " << student.name << " " << student.score << endl;
+//        return os;
+//    }
+//
+//};
+//
+//
+//int main() {
+//    vector<int> a = {6, 5, 4, 3, 2, 1};
+//    vector<double> b = {6.6, 5.5, 4.4, 3.3, 2.2, 1.1};
+//    vector<Student> student = {{"abc", 6},
+//                               {"bcd", 5},
+//                               {"bcd", 4},
+//                               {"bcd", 3},
+//                               {"bcd", 2},
+//                               {"bcd", 1},
+//                               {"bcd", 0}};
+//    vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
+////    vector<int> d = {c.begin(), c.end()};
+////    vector<int> e = SortTestHelper::generateNearlyOrderedArray<int>(50000, 10);
+//    vector<int> f = {e.begin(), e.end()};
+//    vector<int> j = {e.begin(), e.end()};
+//    // 选择排序
+////    SortTestHelper::testSort("selectionSort", selectionSort, e);
+//    // 插入排序
+////    SortTestHelper::testSort("insertionSort", insertionSort, f);
+//    // 归并排序
+////    SortTestHelper::testSort("mergeSort",mergeSort,f);
+////    SortTestHelper::testSort("mergeSortBU",mergeSortBU,j);
+//    // 快速排序
+////    SortTestHelper::testSort("quickSort", quickSort, j);
+////    SortTestHelper::testSort("quickSort2", quickSort2, f);
+//    SortTestHelper::testSort("quickSort3", quickSort3Ways, e);
+//}
 
 template<typename T>
-void mergeSort(vector<T> &a) {
-    __mergeSort(a, 0, a.size() - 1);
-}
-
-template<typename T>
-void mergeSortBU(vector<T> &a) {
-    for (int sz = 1; sz <= a.size() - 1; sz += sz) {
-        for (int i = 0; (i + sz) < (a.size() - 1); i += sz + sz)
-            __merge(a, i, i + sz - 1, (i + 2 * sz - 1) < (a.size() - 1) ? (i + 2 * sz - 1) : (a.size() - 1));
-    }
-}
-
-//快速排序
-template<typename T>
-int __partition(vector<T> &a, int l, int r) {
-    swap(a[l], a[rand() % (r - l + 1) + l]);
-    int j = l;
-    for (int i = l + 1; i <= r; i++) {
-        if (a[i] < a[l]) {
-            swap(a[++j], a[i]);
+void __shiftDown(T arr[],int n,int k) {
+    while (k * 2 +1 <= n) {
+        int j = 2 * k;
+        if (j + 1 <= n && arr[j + 1] > arr[j]) {
+            j += 1;
         }
+        if (arr[k] >= arr[j])
+            break;
+        swap(arr[k], arr[j]);
+        k = j;
     }
-    swap(a[l], a[j]);
-    return j;
 }
 
 template<typename T>
-void __quickSort(vector<T> &a, int l, int r) {
-//    if( l >= r)
-//        return ;
-    if (r - l <= 15) {
-        insertionSort(a, l, r);
-        return;
+void heapSort1(T arr[],int n){
+    MaxHeap<T> maxHeap = MaxHeap<T>(n);
+    for(int i=0;i<n;i++){
+        maxHeap.insert(arr[i]);
     }
-    int p = __partition(a, l, r);
-    __quickSort(a, l, p - 1);
-    __quickSort(a, p + 1, r);
+    for(int i=n-1;i>=0;i--){
+        arr[i] = maxHeap.extractMax();
+    }
 }
 
 template<typename T>
-void quickSort(vector<T> &a) {
-    srand(time(NULL));
-    __quickSort(a, 0, a.size() - 1);
+void heapSort2(T arr[],int n){
+    MaxHeap<T> maxHeap = MaxHeap<T>(arr,n);
+    for(int i=n-1;i>=0;i--){
+        arr[i] = maxHeap.extractMax();
+    }
 }
 
 template<typename T>
-int __partition2(vector<T> &a, int l, int r) {
-    swap(a[l], a[rand() % (r - l + 1) + l]);
-    int i = l + 1, j = r;
-    while (true) {
-        while (i <= r && a[i] < a[l]) i++;
-        while (j >= l + 1 && a[j] > a[l]) j--;
-        if (i > j) break;
-        swap(a[i], a[j]);
-        i++;
-        j--;
+void heapSort(T arr[],int n){
+    // 从(最后一个元素的索引-1)/2开始
+    // 最后一个元素的索引 = n-1
+    for(int i = (n-1-1)/2;i>=0;i--){
+        __shiftDown(arr,n,i);
     }
-    swap(a[l], a[j]);
-    return j;
+    for( int i = n-1;i>0;i--){
+        swap(arr[0],arr[i]);
+        __shiftDown(arr,i,0);
+    }
 }
-
-template<typename T>
-void __quickSort2(vector<T> &a, int l, int r) {
-//    if( l >= r)
-//        return ;
-    if (r - l <= 15) {
-        insertionSort(a, l, r);
-        return;
-    }
-    int p = __partition2(a, l, r);
-    __quickSort2(a, l, p - 1);
-    __quickSort2(a, p + 1, r);
-}
-
-template<typename T>
-void quickSort2(vector<T> &a) {
-    srand(time(NULL));
-    __quickSort2(a, 0, a.size() - 1);
-}
-
-template<typename T>
-void __quickSort3Ways(vector<T> &a, int l, int r) {
-//    if( l >= r)
-//        return ;
-    if (r - l <= 15) {
-        insertionSort(a, l, r);
-        return;
-    }
-
-    swap(a[l], a[rand() % (r - l + 1) + l]);
-    int lt=l;
-    int gt=r+1;
-    int i=l+1;
-
-    while(i<gt){
-        if(a[i]<a[l]) swap(a[++lt],a[i++]);
-        else if(a[i]>a[l]) swap(a[--gt],a[i]);
-        else i++;
-    }
-    swap(a[l],a[lt]);
-
-    __quickSort3Ways(a, l, lt-1);
-    __quickSort3Ways(a, gt, r);
-}
-
-template<typename T>
-void quickSort3Ways(vector<T> &a) {
-    srand(time(NULL));
-    __quickSort3Ways(a, 0, a.size() - 1);
-}
-
-class Student {
-public:
-    string name;
-    int score;
-
-    Student(string name, int score) {
-        this->score = score;
-        this->name = name;
-    }
-
-    bool operator<(const Student &otherStudent) const {
-        return score < otherStudent.score;
-    }
-
-    friend ostream &operator<<(ostream &os, const Student &student) {
-        os << "Student: " << student.name << " " << student.score << endl;
-        return os;
-    }
-
-};
-
 
 int main() {
-    vector<int> a = {6, 5, 4, 3, 2, 1};
-    vector<double> b = {6.6, 5.5, 4.4, 3.3, 2.2, 1.1};
-    vector<Student> student = {{"abc", 6},
-                               {"bcd", 5},
-                               {"bcd", 4},
-                               {"bcd", 3},
-                               {"bcd", 2},
-                               {"bcd", 1},
-                               {"bcd", 0}};
+//    MaxHeap<int> maxHeap = MaxHeap<int>(20);
+//    cout << maxHeap.size();
+//    srand(time(NULL));
+//    for (int i = 0; i < 30; i++) {
+//        maxHeap.insert(i);
+//    }
+//    cout << maxHeap.size() << endl;
+//    maxHeap.print();
+//    cout << endl;
+//    maxHeap.testPrint();
+//    for(int k=0;k<15;k++){
+//        cout<<maxHeap.extractMax()<<endl;
+//    }
+//    cout << maxHeap.size() << endl;
+//    maxHeap.testPrint();
     vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
-//    vector<int> d = {c.begin(), c.end()};
-//    vector<int> e = SortTestHelper::generateNearlyOrderedArray<int>(50000, 10);
-    vector<int> f = {e.begin(), e.end()};
-    vector<int> j = {e.begin(), e.end()};
-    // 选择排序
-//    SortTestHelper::testSort("selectionSort", selectionSort, e);
-    // 插入排序
-//    SortTestHelper::testSort("insertionSort", insertionSort, f);
-    // 归并排序
-//    SortTestHelper::testSort("mergeSort",mergeSort,f);
-//    SortTestHelper::testSort("mergeSortBU",mergeSortBU,j);
-    // 快速排序
-//    SortTestHelper::testSort("quickSort", quickSort, j);
-//    SortTestHelper::testSort("quickSort2", quickSort2, f);
-    SortTestHelper::testSort("quickSort3", quickSort3Ways, e);
 }
