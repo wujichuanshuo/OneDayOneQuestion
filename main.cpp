@@ -12,6 +12,8 @@
 #include <string>
 #include <sstream>
 #include <limits>
+#include <set>
+#include <unordered_set>
 #include "SortTestHelper.h"
 #include "Heap.h"
 
@@ -1750,6 +1752,156 @@ int lcm(int a, int b) {
 //
 //}
 
+//class Solution {
+//private:
+//    // 最高位的二进制位编号为 30
+//    static constexpr int HIGH_BIT = 30;
+//
+//public:
+//    int findMaximumXOR(vector<int>& nums) {
+//        int x = 0;
+//        for (int k = HIGH_BIT; k >= 0; --k) {
+//            unordered_set<int> seen;
+//            // 将所有的 pre^k(a_j) 放入哈希表中
+//            for (int num: nums) {
+//                // 如果只想保留从最高位开始到第 k 个二进制位为止的部分
+//                // 只需将其右移 k 位
+//                seen.insert(num >> k);
+//            }
+//
+//            // 目前 x 包含从最高位开始到第 k+1 个二进制位为止的部分
+//            // 我们将 x 的第 k 个二进制位置为 1，即为 x = x*2+1
+//            int x_next = x * 2 + 1;
+//            bool found = false;
+//
+//            // 枚举 i
+//            for (int num: nums) {
+//                if (seen.count(x_next ^ (num >> k))) {
+//                    found = true;
+//                    break;
+//                }
+//            }
+//
+//            if (found) {
+//                x = x_next;
+//            }
+//            else {
+//                // 如果没有找到满足等式的 a_i 和 a_j，那么 x 的第 k 个二进制位只能为 0
+//                // 即为 x = x*2
+//                x = x_next - 1;
+//            }
+//        }
+//        return x;
+//    }
+//};
+//
+
+//struct TreeNode {
+//    int val;
+//    TreeNode *left;
+//    TreeNode *right;
+//    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//};
+//
+//struct z{
+//    TreeNode * mom;
+//    TreeNode * b;
+//};
+//
+//bool isCousins(TreeNode* root, int x, int y) {
+//    int k=0;
+//    queue<z> a;
+//    a.push({root,NULL});
+//    while (true){
+//        vector<z> tmp;
+//        while(!a.empty()){
+//            z r;
+//            r = a.front();
+//            a.pop();
+//            tmp.push_back(r);
+//        }
+//        z *t = nullptr;
+//        z *u = nullptr;
+//        for(auto i : tmp){
+//            if(i.b!=NULL&&i.b->val==x){
+//                if(t== nullptr){
+//                    t = &i;
+//                }else{
+//                    u= &i;
+//                    break;
+//                }
+//            }
+//            if(i.b!=NULL&&i.b->val==y){
+//                if(t==nullptr){
+//                    t = &i;
+//                }else{
+//                    u= &i;
+//                    break;
+//                }
+//            }
+//        }
+//        if(t!=nullptr||u!=nullptr){
+//            if(t->mom!=u->mom){
+//                return true;
+//            }
+//            else
+//                break;
+//        }else{
+//            for(auto i : tmp){
+//                if(i.b!=NULL){
+//                    a.push({i.b,i.b->left});
+//                    a.push({i.b,i.b->right});
+//                }
+//            }
+//        }
+//    }
+//    return false;
+//}
+
+//int main(){
+//    vector<int> arr={2,3,1,6,7};
+//    vector<int> tmp(arr.size()+1);
+//    tmp[0] = 0;
+//    for(int i=1;i<arr.size();i++){
+//        tmp[i] = tmp[i - 1] ^ arr[i - 1];
+//    }
+//    int ans=0;
+//    for(int i=0;i<arr.size();i++){
+//        for(int j=i+1;j<arr.size()+1;j++)
+//            if(tmp[i]==tmp[j]){
+//                cout<<j<<" "<<i<<endl;
+//                ans+=j-i;
+//            }
+//    }
+//    cout<<ans;
+//}
+
+//int main()
+//{
+//    int arr[10]={1,3,2,5,6,7,4,9,10,8},i,j,t ;
+//    vector<int> vec(begin(arr), end(arr));
+//    for(i=1;i<vec.size();i++)
+//        for(j=0;j<vec.size()-1;j++)
+//            if(vec[j]<vec[j+1])
+//            {
+//                t=vec[j];
+//                vec[j]=vec[j+1];
+//                vec[j+1]=t ;
+//            }
+//    vector<int> ans;
+//    for(i=0;i<10;i++)
+//    {
+//        if(vec[i]%2!=0){
+//            ans.push_back(vec[i]);
+//        }
+//    }
+//    vec.clear();
+//    vec=ans;
+//    return 0;
+//}
+
 //// 排序算法bobobo
 //// 选择排序
 //template<typename T>
@@ -2046,21 +2198,21 @@ void heapSort(T arr[],int n){
     }
 }
 
-int main() {
-//    MaxHeap<int> maxHeap = MaxHeap<int>(20);
-//    cout << maxHeap.size();
-//    srand(time(NULL));
-//    for (int i = 0; i < 30; i++) {
-//        maxHeap.insert(i);
-//    }
-//    cout << maxHeap.size() << endl;
-//    maxHeap.print();
-//    cout << endl;
-//    maxHeap.testPrint();
-//    for(int k=0;k<15;k++){
-//        cout<<maxHeap.extractMax()<<endl;
-//    }
-//    cout << maxHeap.size() << endl;
-//    maxHeap.testPrint();
-    vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
-}
+//int main() {
+////    MaxHeap<int> maxHeap = MaxHeap<int>(20);
+////    cout << maxHeap.size();
+////    srand(time(NULL));
+////    for (int i = 0; i < 30; i++) {
+////        maxHeap.insert(i);
+////    }
+////    cout << maxHeap.size() << endl;
+////    maxHeap.print();
+////    cout << endl;
+////    maxHeap.testPrint();
+////    for(int k=0;k<15;k++){
+////        cout<<maxHeap.extractMax()<<endl;
+////    }
+////    cout << maxHeap.size() << endl;
+////    maxHeap.testPrint();
+//    vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
+//}
