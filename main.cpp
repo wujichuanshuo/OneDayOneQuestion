@@ -11,9 +11,11 @@
 #include <set>
 #include <string>
 #include <sstream>
+#include <math.h>
 #include <limits>
 #include <set>
 #include <unordered_set>
+#include <unordered_map>
 #include "SortTestHelper.h"
 #include "Heap.h"
 
@@ -2166,53 +2168,788 @@ void __shiftDown(T arr[],int n,int k) {
     }
 }
 
-template<typename T>
-void heapSort1(T arr[],int n){
-    MaxHeap<T> maxHeap = MaxHeap<T>(n);
-    for(int i=0;i<n;i++){
-        maxHeap.insert(arr[i]);
-    }
-    for(int i=n-1;i>=0;i--){
-        arr[i] = maxHeap.extractMax();
-    }
-}
+//template<typename T>
+//void heapSort1(T arr[],int n){
+//    MaxHeap<T> maxHeap = MaxHeap<T>(n);
+//    for(int i=0;i<n;i++){
+//        maxHeap.insert(arr[i]);
+//    }
+//    for(int i=n-1;i>=0;i--){
+//        arr[i] = maxHeap.extractMax();
+//    }
+//}
+//
+//template<typename T>
+//void heapSort2(T arr[],int n){
+//    MaxHeap<T> maxHeap = MaxHeap<T>(arr,n);
+//    for(int i=n-1;i>=0;i--){
+//        arr[i] = maxHeap.extractMax();
+//    }
+//}
+//
+//template<typename T>
+//void heapSort(T arr[],int n){
+//    // 从(最后一个元素的索引-1)/2开始
+//    // 最后一个元素的索引 = n-1
+//    for(int i = (n-1-1)/2;i>=0;i--){
+//        __shiftDown(arr,n,i);
+//    }
+//    for( int i = n-1;i>0;i--){
+//        swap(arr[0],arr[i]);
+//        __shiftDown(arr,i,0);
+//    }
+//}
 
-template<typename T>
-void heapSort2(T arr[],int n){
-    MaxHeap<T> maxHeap = MaxHeap<T>(arr,n);
-    for(int i=n-1;i>=0;i--){
-        arr[i] = maxHeap.extractMax();
-    }
-}
+//bool cp(vector<int> &a, vector<int> &b) {
+//  if (a[0] != b[0]) return a[0] < b[0];
+//  if (a[1] != b[1]) return a[1] < b[1];
+//  if (a[2] != b[2]) return a[2] < b[2];
+//  return false;
+//
+//}
 
-template<typename T>
-void heapSort(T arr[],int n){
-    // 从(最后一个元素的索引-1)/2开始
-    // 最后一个元素的索引 = n-1
-    for(int i = (n-1-1)/2;i>=0;i--){
-        __shiftDown(arr,n,i);
-    }
-    for( int i = n-1;i>0;i--){
-        swap(arr[0],arr[i]);
-        __shiftDown(arr,i,0);
-    }
-}
+//class Solution {
+// public:
+//  struct MyStruct {
+//    unordered_set<int> num;
+//    vector<vector<int>> se;
+//  };
+//  vector<vector<int>> threeSum(vector<int> &nums) {
+//    sort(nums.begin(), nums.end());
+//    vector<int> numss;
+//    int q = 1;
+//    if (!nums.empty()) numss.push_back(nums[0]);
+//    for (int i = 1; i < nums.size(); i++) {
+//      if (nums[i] == nums[i - 1]) {
+//        q++;
+//        if (q <= 4) {
+//          numss.push_back(nums[i]);
+//        }
+//      } else {
+//        int q = 1;
+//        numss.push_back(nums[i]);
+//      }
+//    }
+//    nums.clear();
+//    nums = numss;
+//    unordered_map<int, MyStruct> numtwo;
+//    for (int i = 0; i < nums.size(); i++) {
+//      for (int j = i + 1; j < nums.size(); j++) {
+//        if (numtwo.find(nums[i] + nums[j]) != numtwo.end()) {
+//          if ((numtwo[nums[i] + nums[j]].num.find(i) ==
+//               numtwo[nums[i] + nums[j]].num.end()) ||
+//              (numtwo[nums[i] + nums[j]].num.find(j) ==
+//               numtwo[nums[i] + nums[j]].num.end())) {
+//            numtwo[nums[i] + nums[j]].num.emplace(i);
+//            numtwo[nums[i] + nums[j]].num.emplace(j);
+//            vector<int> tm{i, j};
+//            numtwo[nums[i] + nums[j]].se.push_back(tm);
+//          }
+//        } else {
+//          MyStruct tmp;
+//          tmp.num.emplace(i);
+//          tmp.num.emplace(j);
+//          vector<int> tm{i, j};
+//          tmp.se.push_back(tm);
+//          numtwo[nums[i] + nums[j]] = tmp;
+//        }
+//      }
+//    }
+//    vector<vector<int>> asd;
+//    vector<vector<int>> ans;
+//    for (int i = 0; i < nums.size(); i++) {
+//      if (numtwo.find(0 - nums[i]) != numtwo.end()) {
+//        for (int j = 0; j < numtwo[0 - nums[i]].se.size(); j++) {
+//          if (i != numtwo[0 - nums[i]].se[j][0] &&
+//              i != numtwo[0 - nums[i]].se[j][1]) {
+//            asd.push_back({nums[i], nums[numtwo[0 - nums[i]].se[j][0]],
+//                           nums[numtwo[0 - nums[i]].se[j][1]]});
+//          }
+//        }
+//      }
+//    }
+//    for (int i = 0; i < asd.size(); i++) {
+//      sort(asd[i].begin(), asd[i].end());
+//    }
+//    sort(asd.begin(), asd.end(), cp);
+//    if (!asd.empty()) {
+//      ans.push_back(asd[0]);
+//    }
+//
+//    for (int i = 1; i < asd.size(); i++) {
+//      if (asd[i][0] != asd[i - 1][0] || asd[i][1] != asd[i - 1][1] ||
+//          asd[i][2] != asd[i - 1][2]) {
+//        ans.push_back(asd[i]);
+//      }
+//    }
+//    return ans;
+//  }
+//};
+
+//class Solution {
+// public:
+//  int balancedString(string s) {
+//    int n = s.size() / 4;
+//    int z[26] = {0};
+//    for (auto i : s) {
+//      z[(int)i - 'A']++;
+//    }
+//    int ans = 0;
+//    ans += (z['Q' - 'A'] - n) > 0 ? (z['Q' - 'A']) - n : 0;
+//    ans += (z['W' - 'A'] - n) > 0 ? (z['W' - 'A']) - n : 0;
+//    ans += (z['E' - 'A'] - n) > 0 ? (z['E' - 'A']) - n : 0;
+//    ans += (z['R' - 'A'] - n) > 0 ? (z['R' - 'A']) - n : 0;
+//    return ans;
+//  }
+//};
+
+//class Solution {
+// public:
+//   int ma(vector<vector<int>>& g, int x, int y) { 
+//     int m = -1;
+//     m = max(m, g[x - 1][y-1]);
+//     m = max(m, g[x - 1][y]);
+//     m = max(m, g[x - 1][y + 1]);
+//     m = max(m, g[x][y - 1]);
+//     m = max(m, g[x][y]);
+//     m = max(m, g[x][y +1]);
+//     m = max(m, g[x + 1][y - 1]);
+//     m = max(m, g[x + 1][y]);
+//     m = max(m, g[x + 1][y + 1]);
+//     return m;
+//  }
+//  vector<vector<int>> largestLocal(vector<vector<int>>& grid) {
+//    vector<vector<int>> ans;
+//    ans.resize(grid.size() - 2);
+//    for (int i = 0; i < grid.size() - 2; i++) {
+//      ans[i].resize(grid[0].size() - 2);
+//    }
+//    for (int j = 1; j < grid.size()-1; j++) {
+//      for (int k = 1; k < grid[0].size() - 1; k++) {
+//        ans[j - 1][k - 1] = ma(grid, j, k);
+//      }
+//    
+//    }
+//    return ans;
+//  }
+//};
+
+//class Solution {
+//public:
+//  vector<string> getFolderNames(vector<string>& names) {
+//    unordered_set<string> set;
+//    unordered_map<string, int> map;
+//    vector<string> ans;
+//    for (auto i : names)
+//    {
+//      string z = "";
+//      if (i.find_last_of('(') != string::npos)
+//      {
+//        z = string(i.c_str(), 0, i.find_last_not_of('(') - 2);
+//
+//      }
+//      if (set.find(i) == set.end() && z.length() == 0)
+//      {
+//        ans.push_back(i);
+//        set.insert(i);
+//        map[i] = 0;
+//      } else
+// {
+//        if (map.find(z) == map.end())
+//        {
+//          if (map[z] !=
+//            atoi(string(i.c_str(), i.find_last_of('(') + 1, i.find_last_of(')') - 1)
+//              .c_str()))
+//          {
+//            ans.push_back(i);
+//            set.insert(i);
+//          } else {
+//            ans.push_back(z + "(" + to_string(map[z]) + ")");
+//            set.insert(z + "(" + to_string(map[z]) + ")");
+//          }
+//        } else
+//        {
+//          if (set.find(i) == set.end()){
+//            ans.push_back(i + "(1)");
+//            set.insert(i + "(1)");
+//            map[i] = 1;
+//            continue;
+//          }
+//          while (set.find(i + "(" + to_string(++map[i]) + ")") != set.end())
+//            ;
+//           ans.push_back(i + "(" + to_string(map[i]) + ")");
+//          set.insert(i + "(" + to_string(map[i]) + ")");
+//        }
+//      }
+//    }
+//    return ans;
+//  }
+//};
+
+//class Solution {
+// public:
+//  int maxValue(vector<vector<int>>& grid) {
+//    vector<vector<int>> dp(grid.size(), vector<int>(grid[0].size()));
+//    for (int j = 0; j < grid.size(); j++) {
+//      for (int k = 0; k < grid[0].size(); k++) {
+//        if (j > 0) {
+//          dp[j][k] = max(dp[j][k], dp[j - 1][k]);
+//        }
+//        if (k > 0) {
+//          dp[j][k] = max(dp[j][k], dp[j][k - 1]);
+//        }
+//        dp[j][k] += grid[j][k];
+//      }
+//    }
+//    return dp[grid.size() - 1][grid[0].size() - 1];
+//  }
+//};
+
+
+
+
+//class Solution {
+// public:
+//  int minimumRecolors(string blocks, int k) {
+//    int w = 0;
+//    int ans = 200000000;
+//    for (int i = 0; i < k; i++){
+//      if (blocks[i] == 'W') {
+//        w++;
+//      }
+//    }
+//    ans = min(ans, w);
+//    for (int i = 1; i+k <= blocks.size(); i++)
+//    {
+//      if (blocks[i+k-1] == 'W') {
+//        w++;
+//      }
+//      if (blocks[i-1] == 'W') w--;
+//      ans = min(ans, w);
+//    }
+//    return ans;
+//  }
+//};
+//
+//
+//class Solution {
+// public:
+//  int minimumRecolors(string blocks, int k) {
+//    int l = 0, r = 0, cnt = 0;
+//    while (r < k) {
+//      cnt += blocks[r] == 'W' ? 1 : 0;
+//      r++;
+//    }
+//    int res = cnt;
+//    while (r < blocks.size()) {
+//      cnt += blocks[r] == 'W' ? 1 : 0;
+//      cnt -= blocks[l] == 'W' ? 1 : 0;
+//      res = min(res, cnt);
+//      l++;
+//      r++;
+//    }
+//    return res;
+//  }
+//};
+
+//class Solution {
+// public:
+//  int minSubarray(vector<int>& nums, int p) {
+//    vector<int> qz(nums.size(),0);
+//
+//    qz[0] = nums[0] % p;
+//    for (int i = 1; i < nums.size(); i++) {
+//      qz[i] = (qz[i - 1] + nums[i]) % p;
+//    }
+//    if (qz[nums.size() - 1]==0){
+//      return 0;
+//    }
+//    unordered_map<int, int> aa;
+//    int ans=20000000;
+//    for (int i = 0; i < nums.size(); i++) {
+//      aa[qz[i]] = i;
+//      if (i == nums.size()-1) {
+//        continue;
+//      }
+//      if (qz[i] == 0) {
+//        ans = min(ans, int(nums.size()-i-1));
+//        continue;
+//      }
+//      if (aa.count(p - qz[nums.size() - 1]) % p > 0) {
+//        if (i == nums.size() - 2) {
+//          return 1;
+//        }
+//        ans = min(ans, i - aa[p - qz[nums.size() - 1]]);
+//      }
+//      
+//    }
+//    if (ans == 20000000) return -1;
+//    return ans;
+//  }
+//};
+
+//int fun(int c) {
+//  std::cout << c;
+//  return 0;
+//}
+//
+//std::ostream asd(char* a) {
+//
+//}
+class a {
+public:
+  virtual void aa() {
+    cout << "a";
+  }
+};
+
+class b :public a {
+public:
+  virtual void aa() {
+    cout << "b";
+  }
+};
+
 
 //int main() {
-////    MaxHeap<int> maxHeap = MaxHeap<int>(20);
-////    cout << maxHeap.size();
-////    srand(time(NULL));
-////    for (int i = 0; i < 30; i++) {
-////        maxHeap.insert(i);
-////    }
-////    cout << maxHeap.size() << endl;
-////    maxHeap.print();
-////    cout << endl;
-////    maxHeap.testPrint();
-////    for(int k=0;k<15;k++){
-////        cout<<maxHeap.extractMax()<<endl;
-////    }
-////    cout << maxHeap.size() << endl;
-////    maxHeap.testPrint();
-//    vector<int> e = SortTestHelper::generateRandomArray<int>(100000, 0, 161124);
+//  // vector<string> an = {"kaido", "kaido(1)", "kaido", "kaido(1)"};
+//  // vector<string> ans = a.getFolderNames(an);
+//  ////cout<<ans.size();
+//  // Solution a;
+//  // vector<int> z = {1,2,3};
+//  // a.minSubarray(z,7);
+//  // std::cout << "output:" << std::endl;
+//  // int a = 0;
+//  // float b = 1.0;
+//  // std::cout << "a is " << a << " b is " << b << " a+b is" << a+b <<
+//  // std::endl; b z; a& q = z; q.aa(); return 0;
+//  vector<int> nums = {14, 30, 29, 49, 3, 23, 44, 21, 26, 52};
+//  int ans = 0;
+//  int tmp = 1;
+//  int z = -1;
+//
+//  for (int i = 1; i < nums.size(); i++) {
+//    if (nums[i - 1] == nums[i] + z) {
+//      tmp++;
+//    }
+//    else {
+//      tmp = 1;
+//      z = 1;
+//      if ((nums[i - 1] == (nums[i] - 1)) && tmp == 1) {
+//        z = -1;
+//        tmp++;
+//      } 
+//    }
+//    z = 0 - z;
+//    ans = max(ans, tmp);
+//  }
+//  ans = ans ==0  || ans ==1 ? -1 : ans;
+//  return ans;
+//}
+
+
+  //int zz(vector<string>& arr, int a, int b) {
+  //  if (a == arr.size()) {
+  //    return 0;
+  //  }
+  //  int z = b;
+  //  for (auto c : arr[a]) {
+  //    if ((1 << (c - 'a')) & z) {
+  //      return zz(arr, a + 1, z);
+  //    }
+  //    b |= (1 << (c - 'a'));
+  //  }
+  //  int len = arr[a].length();
+  //  return max(len + zz(arr, a + 1, b), zz(arr, a + 1, z));
+  //}
+
+//class Solution {
+// public:
+//  int backtrace(vector<string>& arr, int i, int m) {
+//    if (i == arr.size()) {
+//      return 0;
+//    }
+//    int t = m;
+//    for (char c : arr[i]) {
+//      if (m & (1 << (c - 'a'))) {
+//        return backtrace(arr, i + 1, t);
+//      }
+//      m |= (1 << (c - 'a'));
+//    }
+//    int len = arr[i].length();
+//    return max(len + backtrace(arr, i + 1, m), backtrace(arr, i + 1, t));
+//  }
+//  int maxLength(vector<string>& arr) { return backtrace(arr, 0, 0); }
+//};
+//struct ListNode {
+//  int val;
+//  ListNode *next;
+//  ListNode(int x) : val(x), next(NULL){} 
+//};
+//
+//int main() { 
+//  ListNode *head;
+//  std::unordered_set<long long> a;
+//  bool flag = false;
+//  while (true) {
+//    if (head->next == NULL) {
+//      break;
+//    }
+//    if (a.find((long long)(head->next)) != a.end()) {
+//      flag = true;
+//      break;
+//    }
+//    a.insert((long long)(head));
+//  }
+//  return flag;
+//}
+
+
+class LRUCache {
+ public:
+  struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode* last;
+    ListNode(int x) : val(x), next(NULL), last(NULL) {}
+  };
+  struct iter {
+    int value;
+    ListNode* addr;
+  };
+
+  int capacity_;
+  unordered_map<int, iter> map_;
+  ListNode* hade = nullptr;
+  ListNode* end = nullptr;
+  LRUCache(int capacity) {
+    capacity_ = capacity;
+    end = new ListNode(-1);
+    hade = end;
+    end->last = hade;
+    hade->next = end;
+  }
+
+  int get(int key) {
+    if (map_.find(key) != map_.end()) {
+      if (hade != map_[key].addr) {
+        map_[key].addr->last->next = map_[key].addr->next;
+        map_[key].addr->next->last = map_[key].addr->last;
+        hade->last = map_[key].addr;
+        map_[key].addr->last = NULL;
+        map_[key].addr->next = hade;
+        hade = map_[key].addr;
+      }
+
+      return map_[key].value;
+    } else {
+      return -1;
+    }
+  }
+
+  void put(int key, int value) {
+    if (map_.find(key) != map_.end()) {
+      map_[key].value = value;
+      get(key);
+    } else {
+      if (capacity_ == 1) {
+        delete (hade);
+        hade = end;
+        map_.clear();
+      }
+      else if (map_.size() >= capacity_) {
+        map_.erase(end->last->val);
+        end->last->last->next = end;
+        ListNode* tmp = end->last;
+        end->last = end->last->last;
+        delete (tmp);
+      }
+      ListNode* i = new ListNode(key);
+      map_.insert({key, {value, i}});
+      hade->last = i;
+      i->next = hade;
+      hade = i;
+    }
+  }
+};
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode()
+      : val(0),
+  next(nullptr){}  ListNode(int x)
+      : val(x),
+  next(nullptr){} ListNode(int x, ListNode* next) : val(x), next(next){}
+};
+
+//int main() { 
+//  ListNode* list1;
+//  ListNode* list2;
+//  ListNode* ans;
+//  ListNode* tmp;
+//  if (list1->val > list2->val) {
+//    swap(list1, list2);
+//  }
+//  ans = new ListNode(list1->val);
+//  list1 = list1->next;
+//  tmp = ans;
+//  while (list1 != nullptr && list2 != nullptr) {
+//    ListNode* i;
+//    if (list1->val < list2->val) {
+//      i = new ListNode(list1->val);
+//      list1 = list1->next;
+//    } else {
+//      i = new ListNode(list2->val);
+//      list2 = list2->next;
+//
+//    }
+//    tmp->next = i;
+//    tmp = tmp->next;
+//  }
+//  if (list1 == nullptr) {
+//    swap(list1, list2);
+//  }
+//  while (list1 == nullptr) {
+//    tmp->next = list1;
+//    tmp = tmp->next;
+//    list1 = list1->next;
+//  }
+//}
+
+//int main() {
+//  //ListNode* head;
+//  //int n;
+//  //ListNode* last;
+//  //ListNode* tmp;
+//  //if (n == 1) {
+//  //  return head->next;
+//  //}
+//  //for (int i = 1; i < n-1; i++) {
+//  //  tmp = head->next;
+//  //}
+//  //last = tmp;
+//  //while (tmp->next == nullptr) {
+//  //  tmp = tmp->next;
+//  //  last = last->next;
+//  //}
+//  //if (last->next->next == nullptr) {
+//  //  last->next == nullptr;
+//  //} else {
+//  //  last->next = last->next->next;
+//  //}
+//
+//  //return head;
+//  ListNode* headA;
+//  ListNode* headB;
+//  unordered_set<long long> set;
+//  while (headA->next != nullptr) {
+//    set.insert((long long)(headA));
+//    headA = headA->next;
+//  }
+//  bool flag = false;
+//  while (headB->next != nullptr) {
+//    if (set.find((long long)(headB)) != set.end()) {
+//      flag = true;
+//    }
+//  }
+//  return flag;
+//}
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+  //  TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+  //if (root1 == nullptr) {
+  //      return root2;
+  //}
+  //if (root2 == nullptr) {
+  //  return root1;
+  //}
+
+  //return new TreeNode(root1->val + root2->val,
+  //                    mergeTrees(root1->left, root2->left),  // 合并左子树
+  //                    mergeTrees(root1->right, root2->right));  // 合并右子树  
+  //  }
+
+
+    //vector<int> ans;
+    //void get(TreeNode* root) { 
+    //  if (root == nullptr) {
+    //    return;
+    //  }
+    //  get(root->left);
+    //  ans.push_back(root->val);
+    //  get(root->right);
+    //}
+    //vector<int> inorderTraversal(TreeNode* root) { /*get(root);
+    //  return ans;*/
+    //  vector<int> ans;
+    //  stack<TreeNode*> st;
+    //  st.push(root);
+    //  while (!st.empty()) {
+    //    TreeNode* tmp = st.top();
+    //    if (tmp == nullptr) {
+    //      st.pop();
+    //    }
+    //    if (tmp->left == nullptr) {
+    //      ans.push_back(tmp->val);
+    //      st.pop();
+    //      st.push(tmp->right);
+    //    } else {
+    //      st.push(tmp->left);
+    //      tmp->left = nullptr;
+    //    }
+    //  }
+    //  return ans;
+    //}
+
+//int a(int c) { 
+//  int ans = 0;
+//  while (c != 0) {
+//    ans += c % 2;
+//    c /= 2;
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  vector<int> ages;
+//  int age[121] = {0};
+//  for (auto i : ages) {
+//    ages[i]++;
+//  }
+//  for (int i = 1; i < 121; i++) {
+//    age[i] += age[i - 1];
+//  }
+//  int ans = 0;
+//  for (auto i : ages) {
+//    ans += (2 * i - 15) >= i ? (age[min(i * 2 - 15, 120)] - age[i]) : 0;
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  vector<int> nums = {-1,-1,1};
+//  int k = 0;
+//  std::unordered_map<int, std::set<int>> ma;
+//  int num[20002] = {0};
+//  num[0] = nums[0];
+//  for (int i = 1; i < nums.size(); i++) {
+//    num[i] = num[i - 1] + nums[i];
+//    if (ma.find(num[i]) != ma.end()) {
+//      ma[num[i]].insert(i);
+//    } else {
+//       ma.insert({num[i], {i}});
+//    }
+//  }
+//  int ans = 0;
+//  for (int i = 0; i < nums.size(); i++) {
+//    int n = 0;
+//    if (k == num[i]) ans++;
+//    if (ma.find(num[i] + k) != ma.end()) {
+//      for (auto z : ma[num[i] + k]) {
+//        if (z <= i) {
+//          n++;
+//          continue;
+//        } else {
+//          ans += ma[num[i] + k].size() - n;
+//        }
+//      }
+//    }
+//  }
+//  //if (k == nums[nums.size()-1]) ans--;
+//  return ans;
+//}
+
+//int main() { 
+//  vector<vector<int>> img = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+//  int a[205][205];
+//  int z[205][205] = {0};
+//  int dir[][2]{{-1, 0},  {1, 0},  {0, -1}, {0, 1}, {1, 1},
+//               {-1, -1}, {1, -1}, {-1, 1}, {0, 0}};
+//  for (int j = 0; j < 205; j++) {
+//    for (int k = 0; k < 205; k++) {
+//      a[j][k] = -1;
+//    }
+//  }
+//  for (int j = 0; j < img.size(); j++) {
+//    for (int k = 0; k < img[0].size(); k++) {
+//      a[j + 1][k + 1] = img[j][k];
+//    }
+//  }
+//  for (int j = 1; j < img.size() + 1; j++) {
+//    for (int k = 1; k < img[0].size() + 1; k++) {
+//      int num = 0;
+//      int zz = 0;
+//      for (int i = 0; i < 9; i++) {
+//        if (a[j + dir[i][0]][k + dir[i][1]] != -1) {
+//          zz += a[j + dir[i][0]][k + dir[i][1]];
+//          num++;
+//        }
+//      }
+//      z[j][k] = zz / num;
+//
+//    }
+//  }
+//  for (int j = 1; j < img.size() + 1; j++) {
+//    for (int k = 1; k < img[0].size() + 1; k++) {
+//      img[j - 1][k - 1] = z[j][k];
+//    }
+//  }
+//}
+
+//int main() {
+//  int n = 5;
+//  vector<vector<int>> queries = {{2, 4}, {0, 2}, {0, 4}};
+//  vector<int> ans;
+//  int a[501] = {0};
+//  vector<vector<int>> par(n);
+//  for (int i = 1; i < n; i++) {
+//    a[i]= i;
+//    par[i].push_back(i - 1);
+//  }
+//
+//  for (int i = 0; i < queries.size(); i++) {
+//    par[queries[i][1]].push_back(queries[i][0]);
+//    for (int z = queries[i][1];z<n;z++){
+//      for (int u : par[z]) {
+//        a[z] = min(a[z], a[u] + 1);
+//      }
+//    }
+//    ans.push_back(a[n - 1]);
+//  }
+//  //return ans;
+//}
+
+//int main() {
+//  int n = 5;
+//  vector<vector<int>> queries = {{2, 4}, {0, 2}, {0, 4}};
+//  vector<int> ans_v;
+//  vector<int> q(n);
+//  for (int i = 0; i <= n; i++) {
+//    q[i] = i+1;
+//  }
+//  int ans = n - 1;
+//  for (auto i : queries) {
+//    if (i[1] > q[i[0]]) {
+//      int z = q[i[0]];
+//      q[i[0]] = i[1];
+//
+//      while (z < i[1]) {
+//        ans--;
+//        z = q[z];
+//      }
+//      ans_v.push_back(ans);
+//    }
+//    else{
+//      ans_v.push_back(ans);
+//    }
+//  }
+//  //return ans_v;
 //}
