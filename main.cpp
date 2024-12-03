@@ -16,6 +16,7 @@
 #include <set>
 #include <unordered_set>
 #include <unordered_map>
+#include <fstream>
 #include "SortTestHelper.h"
 #include "Heap.h"
 
@@ -2953,3 +2954,256 @@ struct TreeNode {
 //  }
 //  //return ans_v;
 //}
+//int main() {
+//  int n;
+//  vector<string> commands;
+//  int ans = 0;
+//  for (auto i : commands) {
+//    if (i == "UP") {
+//      ans -= n;
+//    } else if (i == "RIGHT") {
+//      ans += 1;
+//    } else if (i == "DOWN") {
+//      ans += n;
+//    } else if (i == "LEFT") {
+//      ans -= 1;
+//    }
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  string a;
+//  string b;
+//  stack<char> as;
+//  stack<char> bs;
+//  for (int i = a.size() - 1; i > 0;i--) {
+//    as.push(a[i]);
+//  }
+//  for (int i = b.size() - 1; i > 0; i--) {
+//    as.push(b[i]);
+//  }
+//  string ans;
+//  int flag = 0;
+//  while (as.empty() && bs.empty()) {
+//    int tmp = atoi(to_string(as.top()).c_str()) +
+//              atoi(to_string(bs.top()).c_str()) + atoi(to_string(flag).c_str());
+//    flag = tmp / 2;
+//    ans.push_back(tmp % 2);
+//  }
+//}
+
+//int main() {
+//  vector<int> v(100000000 + 100);
+//  vector<int> pp;
+//  for (int i = 2; i <= 100000000 + 10; i++) {
+//    if (v[i] == 0) {
+//      pp.push_back(i);
+//      for (int j = i * 2; j <= 100000000 + 10; j += i) {
+//        v[j] = 1;
+//      }
+//    }
+//  }
+//  std::ofstream zz("./123.txt");
+//  zz << "{";
+//  for (auto i : pp) {
+//    zz << "\"" << i << "\",";
+//  }
+//  zz << "}";
+//}
+
+//int main() {
+//  int n;
+//  vector<vector<int>> pick;
+//  vector<unordered_map<int, int>> num(n);
+//  int ans = 0;
+//  for (auto i : pick) {
+//    if (num[i[0]].find(-1) != num[i[0]].end()) {
+//      continue;
+//    } else {
+//      if (num[i[0]].find(i[1]) == num[i[0]].end()) {
+//        num[i[0]].insert({i[1], 1});
+//      } else {
+//        num[i[0]][i[1]]++;
+//      }
+//      if (num[i[0]][i[1]] >= i[0]) {
+//        ans++;
+//        num[i[0]].insert({-1, 1});
+//      }
+//    }
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  int target;
+//  vector<int> nums;
+//  if (nums.size() == 0) return 0;
+//  int a = 0;
+//  int b = 0;
+//  int ans = 1010;
+//  int ss = 0;
+//  while (b < nums.size()) {
+//    ss += nums[b];
+//    while (ss < target) {
+//      ans = min(ans,(b-a+1));
+//      ss -= nums[a];
+//      a++;
+//    }
+//  }
+//  if (ans == 1010) {
+//    return 0;
+//  }
+//  return ans;
+//}
+//int main() {
+//  string a = "11";
+//  string b = "1";
+//  int ai = atoi(a.c_str());
+//  int bi = atoi(b.c_str());
+//  int ans = 0;
+//  int c = ai + bi;
+//  int zz = 1;
+//  while (c != 0) {
+//    ans += c % 2 * zz;
+//    c += (c % 10) / 2 * 10; 
+//    c /= 10;
+//    zz *= 10;
+//  }
+//  std::string z = std::to_string(ans);
+//  std::cout << z;
+//}
+
+//int main() {
+//  vector<int> nums;
+//  int k;
+//  unordered_map<int, unordered_set<int> > ma;
+//  for (int i = 0; i < nums.size(); i++) {
+//    if (ma.find(nums[i]) == ma.end()) {
+//      ma.insert({nums[i], {i}});
+//    } else {
+//      for (auto z : ma[nums[i]]) {
+//        if (abs(i - z) <= k) {
+//          return true;
+//        }
+//      }
+//      ma[nums[i]].insert(i);
+//    }
+//  }
+//  return false;
+//}
+
+
+struct cmp {
+  bool operator()(const vector<int>& _Left,
+                                       const vector<int>& _Right) const {
+    return _Left[2] > _Right[2];
+  }
+};
+
+//int main() {
+//  vector<vector<int>> times = {{2, 1, 1}, {2, 3, 1}, {3, 4, 1}};
+//  int n = 4;
+//  int k = 2;
+//  vector<int> qq(n + 1);
+//  for (auto &i : qq) {
+//    i = 0;
+//  }
+//      priority_queue<vector<int>, vector<vector<int>>, cmp> dd;
+//  unordered_map<int, vector<vector<int>> > ma;
+//  for (auto i : times) {
+//    if (ma.find(i[0]) == ma.end()) {
+//      ma.insert({i[0], {i}});
+//    } else {
+//      ma[i[0]].push_back(i);
+//    }
+//  }
+//  std::unordered_set<int> se;
+//  se.insert(k);
+//  for (auto i : ma[k]) {
+//    dd.push(i);
+//  }
+//  int ans = 0;
+//  bool flag = false;
+//  while (!dd.empty()) {
+//    int num = se.size();
+//    auto i = dd.top();
+//    se.insert(i[1]);
+//    if (se.size() != num) {
+//      qq[i[1]] = qq[i[0]] + i[2];
+//      if (se.size() == n) {
+//        ans = qq[i[1]];
+//        flag = true;
+//        break;
+//      }
+//      dd.pop();
+//      for (auto z : ma[i[1]]) {
+//        dd.push(z);
+//      }
+//    } else {
+//      dd.pop();
+//      continue;
+//    }
+//  }
+//  if (flag)
+//    return ans;
+//  return -1;
+//}
+
+//int main() { 
+//  vector<int> colors;
+//
+//  int k;
+//  int tmp = 1;
+//  int ans = 0;
+//  int tm = 1;
+//  while (true) {
+//    if (colors[(tmp - 1 + colors.size()) % colors.size()] != colors[tmp] &&
+//        colors[(tmp + 1) % colors.size()] != colors[tmp]) {
+//      tm = 1;
+//    } else {
+//      tm++;
+//    }
+//    if (tm > k) {
+//      ans++;
+//    }
+//
+//    tmp++;
+//    if ((tmp / colors.size()) == 1) break;
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  vector<int> nums = {1, 2, 3, 4, 5, 14};
+//  int a = 0, b = 0;
+//  for (auto i : nums) {
+//    i > 9 ? a += i : b += i;
+//  }
+//  if (a == b) return false;
+//  return true;
+//}
+
+//int main() { 
+//  vector<int> height = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+//  int j = 0;
+//  int k = height.size() - 1;
+//  int ans = 0;
+//  while (j != k) {
+//    ans = max(ans, (min(height[j], height[k]) * (k - j + 2)));
+//    height[k] > height[j] ? j++ : k--;
+//  }
+//  return ans;
+//}
+
+int main() {
+  std::string coordinate1;
+  std::string coordinate2;
+  if (abs(coordinate1[0] - coordinate2[0]) % 2) {
+    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return true;
+    return false;
+  } else {
+    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return false;
+    return true;
+  }
+}
