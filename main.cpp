@@ -2606,82 +2606,82 @@ public:
 //}
 
 
-class LRUCache {
- public:
-  struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode* last;
-    ListNode(int x) : val(x), next(NULL), last(NULL) {}
-  };
-  struct iter {
-    int value;
-    ListNode* addr;
-  };
-
-  int capacity_;
-  unordered_map<int, iter> map_;
-  ListNode* hade = nullptr;
-  ListNode* end = nullptr;
-  LRUCache(int capacity) {
-    capacity_ = capacity;
-    end = new ListNode(-1);
-    hade = end;
-    end->last = hade;
-    hade->next = end;
-  }
-
-  int get(int key) {
-    if (map_.find(key) != map_.end()) {
-      if (hade != map_[key].addr) {
-        map_[key].addr->last->next = map_[key].addr->next;
-        map_[key].addr->next->last = map_[key].addr->last;
-        hade->last = map_[key].addr;
-        map_[key].addr->last = NULL;
-        map_[key].addr->next = hade;
-        hade = map_[key].addr;
-      }
-
-      return map_[key].value;
-    } else {
-      return -1;
-    }
-  }
-
-  void put(int key, int value) {
-    if (map_.find(key) != map_.end()) {
-      map_[key].value = value;
-      get(key);
-    } else {
-      if (capacity_ == 1) {
-        delete (hade);
-        hade = end;
-        map_.clear();
-      }
-      else if (map_.size() >= capacity_) {
-        map_.erase(end->last->val);
-        end->last->last->next = end;
-        ListNode* tmp = end->last;
-        end->last = end->last->last;
-        delete (tmp);
-      }
-      ListNode* i = new ListNode(key);
-      map_.insert({key, {value, i}});
-      hade->last = i;
-      i->next = hade;
-      hade = i;
-    }
-  }
-};
-struct ListNode {
-  int val;
-  ListNode* next;
-  ListNode()
-      : val(0),
-  next(nullptr){}  ListNode(int x)
-      : val(x),
-  next(nullptr){} ListNode(int x, ListNode* next) : val(x), next(next){}
-};
+//class LRUCache {
+// public:
+//  struct ListNode {
+//    int val;
+//    ListNode* next;
+//    ListNode* last;
+//    ListNode(int x) : val(x), next(NULL), last(NULL) {}
+//  };
+//  struct iter {
+//    int value;
+//    ListNode* addr;
+//  };
+//
+//  int capacity_;
+//  unordered_map<int, iter> map_;
+//  ListNode* hade = nullptr;
+//  ListNode* end = nullptr;
+//  LRUCache(int capacity) {
+//    capacity_ = capacity;
+//    end = new ListNode(-1);
+//    hade = end;
+//    end->last = hade;
+//    hade->next = end;
+//  }
+//
+//  int get(int key) {
+//    if (map_.find(key) != map_.end()) {
+//      if (hade != map_[key].addr) {
+//        map_[key].addr->last->next = map_[key].addr->next;
+//        map_[key].addr->next->last = map_[key].addr->last;
+//        hade->last = map_[key].addr;
+//        map_[key].addr->last = NULL;
+//        map_[key].addr->next = hade;
+//        hade = map_[key].addr;
+//      }
+//
+//      return map_[key].value;
+//    } else {
+//      return -1;
+//    }
+//  }
+//
+//  void put(int key, int value) {
+//    if (map_.find(key) != map_.end()) {
+//      map_[key].value = value;
+//      get(key);
+//    } else {
+//      if (capacity_ == 1) {
+//        delete (hade);
+//        hade = end;
+//        map_.clear();
+//      }
+//      else if (map_.size() >= capacity_) {
+//        map_.erase(end->last->val);
+//        end->last->last->next = end;
+//        ListNode* tmp = end->last;
+//        end->last = end->last->last;
+//        delete (tmp);
+//      }
+//      ListNode* i = new ListNode(key);
+//      map_.insert({key, {value, i}});
+//      hade->last = i;
+//      i->next = hade;
+//      hade = i;
+//    }
+//  }
+//};
+//struct ListNode {
+//  int val;
+//  ListNode* next;
+//  ListNode()
+//      : val(0),
+//  next(nullptr){}  ListNode(int x)
+//      : val(x),
+//  next(nullptr){} ListNode(int x, ListNode* next) : val(x), next(next){}
+//};
 
 //int main() { 
 //  ListNode* list1;
@@ -3678,32 +3678,92 @@ struct TreeNode {
 //  }
 //};
 
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        int max = 0;
-        int left = 0;
-        int right = 1;
-        std::unordered_set<char> z;
-        z.insert(s[0]);
-        while (right < s.size()) {
-            if (z.find(s[right]) != z.end()) {
-                while (s[left] != s[right]) {
-                    z.erase(s[left]);
-                    left++;
-                }
-                z.erase(s[left]);
-                left++;
-            }
-            else {
-                max = max > (right - left +1) ? max : (right - left + 1);
-            }
-            z.insert(s[right]);
-            right++;
-        }
-        return max;
-    }
-};
+//class Solution {
+//public:
+//    int lengthOfLongestSubstring(string s) {
+//        int max = 0;
+//        int left = 0;
+//        int right = 1;
+//        std::unordered_set<char> z;
+//        z.insert(s[0]);
+//        while (right < s.size()) {
+//            if (z.find(s[right]) != z.end()) {
+//                while (s[left] != s[right]) {
+//                    z.erase(s[left]);
+//                    left++;
+//                }
+//                z.erase(s[left]);
+//                left++;
+//            }
+//            else {
+//                max = max > (right - left +1) ? max : (right - left + 1);
+//            }
+//            z.insert(s[right]);
+//            right++;
+//        }
+//        return max;
+//    }
+//};
+
+// https://leetcode.cn/problems/merge-k-sorted-lists/?envType=study-plan-v2&envId=top-100-liked
+// struct ListNode {
+//     int val;
+//     ListNode *next;
+//     ListNode() : val(0), next(nullptr) {}
+//     ListNode(int x) : val(x), next(nullptr) {}
+//     ListNode(int x, ListNode *next) : val(x), next(next) {}
+// };
+//class Solution {
+//public:
+//    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        //auto cmp = [](ListNode* a, ListNode* b) {
+        //    return (a->val) > (b->val);
+        //    };
+        //std::priority_queue <ListNode*, vector<ListNode*>, decltype(cmp)> q;
+//        for (auto i : lists) {
+//            if (i) {
+//                q.push(i);
+//            }
+//        }
+//        ListNode ans(0);
+//        ListNode* tmp = &ans;
+//        while (!q.empty()) {
+//            auto tmpt = q.top();
+//            q.pop();
+//            tmp->next = tmpt;
+//            tmp = tmpt;
+//            if (tmp->next != nullptr) {
+//                q.push(tmp->next);
+//            }
+//        }
+//        tmp->next = nullptr;
+//        return ans.next;
+//};
+
+
+//https://leetcode.cn/problems/kth-largest-element-in-an-array/submissions/711191959/?envType=study-plan-v2&envId=top-100-liked
+//greater<int>
+//class Solution {
+//public:
+//    int findKthLargest(vector<int> nums, int k) {
+//        auto cmp = [](int a, int b) { return a > b; };
+//        std::priority_queue<int,vector<int>, decltype(cmp)> q(cmp);
+//        for(int i = 0 ; i<k;i++){
+//			q.push(nums[i]);
+//        }
+//        for (int i = k; i < nums.size(); i++) {
+//            if(q.top()<nums[i]){
+//                q.pop();
+//				q.push(nums[i]);
+//            }
+//        }
+//		return q.top();
+//    }
+//};
+
+
+
+
 int main() {
   // int n = 4;
   // if (n == 1 || n == 2) {
@@ -3719,7 +3779,8 @@ int main() {
   // }
   // return ans;
   // std::cout << qq(1, 1, n - 1);
-  Solution a;
 
-  a.lengthOfLongestSubstring("pwwkew");
+  //a.lengthOfLongestSubstring("pwwkew");
+ //   Solution a;
+	//a.findKthLargest({ 3,2,1,5,6,4 }, 2);
 }
