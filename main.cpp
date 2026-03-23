@@ -3094,12 +3094,12 @@ struct TreeNode {
 //}
 
 
-struct cmp {
-  bool operator()(const vector<int>& _Left,
-                                       const vector<int>& _Right) const {
-    return _Left[2] > _Right[2];
-  }
-};
+//struct cmp {
+//  bool operator()(const vector<int>& _Left,
+//                                       const vector<int>& _Right) const {
+//    return _Left[2] > _Right[2];
+//  }
+//};
 
 //int main() {
 //  vector<vector<int>> times = {{2, 1, 1}, {2, 3, 1}, {3, 4, 1}};
@@ -3196,14 +3196,530 @@ struct cmp {
 //  return ans;
 //}
 
+//int main() {
+//  std::string coordinate1;
+//  std::string coordinate2;
+//  if (abs(coordinate1[0] - coordinate2[0]) % 2) {
+//    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return true;
+//    return false;
+//  } else {
+//    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return false;
+//    return true;
+//  }
+//}
+
+
+
+// int main() { system("calc.exe");
+// }
+//#include<windows.h>;
+//#include<tchar.h>;
+//#include<strsafe.h>;
+//
+//#include<iostream>;
+//
+//#pragma comment(lib, "advapi32.lib")
+//
+//#define SVCNAME TEXT("SSSSSSSSSSS")
+//
+//SERVICE_STATUS gSvcStatus;
+//SERVICE_STATUS_HANDLE gSvcStatusHandle;
+//HANDLE ghSvcStopEvent = NULL;
+//
+//VOID SvcInstall(void);
+//VOID WINAPI SvcCtrlHandler(DWORD);
+//VOID WINAPI SvcMain(DWORD, LPTSTR*);
+//
+//VOID ReportSvcStatus(DWORD, DWORD, DWORD);
+//VOID SvcInit(DWORD, LPTSTR*);
+//VOID SvcReportEvent(LPCTSTR);
+//
+//#define SVC_ERROR -11
+//
+//
+//VOID SvcInstall() {
+//  SC_HANDLE schSCManager;
+//  SC_HANDLE schService;
+//  TCHAR szPath[MAX_PATH];
+//
+//  if (!GetModuleFileName(NULL, szPath, MAX_PATH)) {
+//    printf("Cannot install service (%d)\n", GetLastError());
+//    return;
+//  }
+//
+//  // Get a handle to the SCM database.
+//
+//  schSCManager = OpenSCManager(NULL,  // local computer
+//                               NULL,  // ServicesActive database
+//                               SC_MANAGER_ALL_ACCESS);  // full access rights
+//
+//  if (NULL == schSCManager) {
+//    printf("OpenSCManager failed (%d)\n", GetLastError());
+//    return;
+//  }
+//
+//  // Create the service
+//
+//  schService = CreateService(schSCManager,        // SCM database
+//                             SVCNAME,             // name of service
+//                             SVCNAME,             // service name to display
+//                             SERVICE_ALL_ACCESS,  // desired access
+//                             SERVICE_WIN32_OWN_PROCESS,  // service type
+//                             SERVICE_DEMAND_START,       // start type
+//                             SERVICE_ERROR_NORMAL,       // error control type
+//                             szPath,  // path to service's binary
+//                             NULL,    // no load ordering group
+//                             NULL,    // no tag identifier
+//                             NULL,    // no dependencies
+//                             NULL,    // LocalSystem account
+//                             NULL);   // no password
+//
+//  if (schService == NULL) {
+//    printf("CreateService failed (%d)\n", GetLastError());
+//    CloseServiceHandle(schSCManager);
+//    return;
+//  } else
+//    printf("Service installed successfully\n");
+//
+//  CloseServiceHandle(schService);
+//  CloseServiceHandle(schSCManager);
+//}
+//
+//VOID WINAPI SvcMain(DWORD dwArgc, LPTSTR* lpszArgv) {
+//  // Register the handler function for the service
+//
+//  gSvcStatusHandle = RegisterServiceCtrlHandler(SVCNAME, SvcCtrlHandler);
+//
+//  if (!gSvcStatusHandle) {
+//    SvcReportEvent(TEXT("RegisterServiceCtrlHandler"));
+//    return;
+//  }
+//
+//  // These SERVICE_STATUS members remain as set here
+//
+//  gSvcStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
+//  gSvcStatus.dwServiceSpecificExitCode = 0;
+//
+//  // Report initial status to the SCM
+//
+//  ReportSvcStatus(SERVICE_START_PENDING, NO_ERROR, 3000);
+//
+//  // Perform service-specific initialization and work.
+//
+//  SvcInit(dwArgc, lpszArgv);
+//}
+//
+//VOID SvcInit(DWORD dwArgc, LPTSTR* lpszArgv) {
+//  // TO_DO: Declare and set any required variables.
+//  //   Be sure to periodically call ReportSvcStatus() with
+//  //   SERVICE_START_PENDING. If initialization fails, call
+//  //   ReportSvcStatus with SERVICE_STOPPED.
+//
+//  // Create an event. The control handler function, SvcCtrlHandler,
+//  // signals this event when it receives the stop control code.
+//
+//  ghSvcStopEvent = CreateEvent(NULL,   // default security attributes
+//                               TRUE,   // manual reset event
+//                               FALSE,  // not signaled
+//                               NULL);  // no name
+//
+//  if (ghSvcStopEvent == NULL) {
+//    ReportSvcStatus(SERVICE_STOPPED, NO_ERROR, 0);
+//    return;
+//  }
+//
+//  // Report running status when initialization is complete.
+//
+//  ReportSvcStatus(SERVICE_RUNNING, NO_ERROR, 0);
+//
+//system("calc.exe");
+//
+//  // TO_DO: Perform work until service stops.
+//  while (1) {
+//    // Check whether to stop the service.
+//
+//    WaitForSingleObject(ghSvcStopEvent, INFINITE);
+//
+//    ReportSvcStatus(SERVICE_STOPPED, NO_ERROR, 0);
+//    return;
+//  }
+//}
+//
+//VOID ReportSvcStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode,
+//                     DWORD dwWaitHint) {
+//  static DWORD dwCheckPoint = 1;
+//
+//  // Fill in the SERVICE_STATUS structure.
+//
+//  gSvcStatus.dwCurrentState = dwCurrentState;
+//  gSvcStatus.dwWin32ExitCode = dwWin32ExitCode;
+//  gSvcStatus.dwWaitHint = dwWaitHint;
+//
+//  if (dwCurrentState == SERVICE_START_PENDING)
+//    gSvcStatus.dwControlsAccepted = 0;
+//  else
+//    gSvcStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
+//
+//  if ((dwCurrentState == SERVICE_RUNNING) ||
+//      (dwCurrentState == SERVICE_STOPPED))
+//    gSvcStatus.dwCheckPoint = 0;
+//  else
+//    gSvcStatus.dwCheckPoint = dwCheckPoint++;
+//
+//  // Report the status of the service to the SCM.
+//  SetServiceStatus(gSvcStatusHandle, &gSvcStatus);
+//}
+//
+//VOID WINAPI SvcCtrlHandler(DWORD dwCtrl) {
+//  // Handle the requested control code.
+//  OutputDebugString(L"123");
+//  OutputDebugString(std::to_wstring(dwCtrl).c_str());
+//
+//  switch (dwCtrl) {
+//    case SERVICE_CONTROL_STOP:
+//      ReportSvcStatus(SERVICE_STOP_PENDING, NO_ERROR, 0);
+//
+//      // Signal the service to stop.
+//
+//      SetEvent(ghSvcStopEvent);
+//      ReportSvcStatus(gSvcStatus.dwCurrentState, NO_ERROR, 0);
+//
+//      return;
+//
+//    case SERVICE_CONTROL_INTERROGATE:
+//      break;
+//
+//    default:
+//      break;
+//  }
+//}
+//
+//VOID SvcReportEvent(LPCTSTR szFunction) {
+//  HANDLE hEventSource;
+//  LPCTSTR lpszStrings[2];
+//  TCHAR Buffer[80];
+//
+//  hEventSource = RegisterEventSource(NULL, SVCNAME);
+//
+//  if (NULL != hEventSource) {
+//    StringCchPrintf(Buffer, 80, TEXT("%s failed with %d"), szFunction,
+//                    GetLastError());
+//
+//    lpszStrings[0] = SVCNAME;
+//    lpszStrings[1] = Buffer;
+//
+//    ReportEvent(hEventSource,         // event log handle
+//                EVENTLOG_ERROR_TYPE,  // event type
+//                0,                    // event category
+//                SVC_ERROR,            // event identifier
+//                NULL,                 // no security identifier
+//                2,                    // size of lpszStrings array
+//                0,                    // no binary data
+//                lpszStrings,          // array of strings
+//                NULL);                // no binary data
+//
+//    DeregisterEventSource(hEventSource);
+//  }
+//}
+//int main() {
+//  vector<int> nums = {1,-1};
+//  int k = 1;
+//  priority_queue<pair<int, int>> q;
+//  vector<int> ans;
+//  for (int i = 0; i < k; i++) {
+//    q.push({nums[i],i});
+//  }
+//  ans.push_back(q.top().first);
+//  for (int i = k; i < nums.size(); i++) {
+//    q.push({nums[i],i});
+//    while (q.top().second <= i - k) {
+//      q.pop();
+//    }
+//    ans.push_back(q.top().first);
+//  }
+//
+//  //return ans;
+//}
+
+//int main() { 
+//  vector<int> height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}; 
+//          int n = height.size();
+//  if (n == 0) {
+//    return 0;
+//  }
+//  vector<int> lm(n);
+//  lm[0] = height[0];
+//  for (int i = 1; i < height.size(); i++) {
+//    lm[i] = max(lm[i - 1], lm[i]);
+//  }
+//
+//  vector<int> rm(n);
+//  rm[n-1] = height[n-1];
+//  for (int i = n-2; i >= 0; i--) {
+//    rm[i] = max(lm[i + 1], lm[i]);
+//  }
+//  int ans = 0;
+//  for (int i = 1; i < height.size(); i++) {
+//    ans += min(lm[i], rm[i]) - height[i];
+//  }
+//  return ans;
+//}
+
+//int main() {
+//  std::string coordinate;
+//  if (abs((coordinate[0] - 'a') % 2)) {
+//    if (abs((coordinate[1] - '1') % 2)) {
+//      return false;
+//    }
+//    else {
+//      return true;
+//    }
+//  } else {
+//    if (abs((coordinate[1] - '1') % 2)) {
+//      return true;
+//    } else {
+//      return false;
+//    }
+//  }
+//
+
+//struct cmp {
+//  bool operator()(const pair<int, int>& _Left,
+//                  const pair<int, int>& _Right) const {
+//    if (_Left.first != _Right.first) {
+//      return _Left.first > _Right.first;
+//    } else {
+//      return _Left.second > _Right.second;
+//    }
+//  }
+//};
+
+
+//给你一个下标从 0 开始的整数数组 nums 。对于每个下标 i（1 <= i <=
+//    nums.length - 2），nums [i] 的 美丽值 等于：
+//
+//        2，对于所有 0 <=
+//    j < i 且 i < k <= nums.length - 1 ，满足 nums[j] < nums[i] <
+//    nums[k] 1，如果满足 nums[i - 1] < nums[i] <
+//    nums[i + 1] ，且不满足前面的条件 0，如果上述条件全部不满足 返回符合 1 <=
+//    i <= nums.length - 2 的所有 nums[i] 的 美丽值的总和 。
+//
+//             示例 1：
+//
+//             输入：nums =
+//    [ 1, 2, 3 ] 输出：2 解释：对于每个符合范围 1 <= i <= 1 的下标 i
+//    : -nums[1] 的美丽值等于 2 示例 2：
+//
+//      输入：nums =
+//        [ 2, 4, 6, 4 ] 输出：1 解释：对于每个符合范围 1 <= i <= 2 的下标 i
+//    : -nums[1] 的美丽值等于 1 -
+//      nums[2] 的美丽值等于 0 示例 3：
+//
+//      输入：nums = [ 3, 2, 1 ] 输出：0 解释：对于每个符合范围 1 <= i <=
+//                   1 的下标 i : -nums[1] 的美丽值等于 0
+//
+//                                提示：
+//
+//                                3 <= nums.length <= 105 1 <= nums[i] <= 105
+
+//int main() {
+//  // 前面最大值小 后面最小值大 2
+//  // 前小后大 1
+//  // 否则0
+//  vector<int> nums = {3, 2, 1};
+//  vector<int> max(nums.size());
+//  vector<int> min(nums.size());
+//  max[0] = nums[0];
+//  min[nums.size() - 1] = nums[nums.size() - 1];
+//  for (int i = 1; i < nums.size(); i++) {
+//    max[i] = max[i - 1] > nums[i] ? max[i - 1] : nums[i];
+//  }
+//  for (int i = nums.size() - 2; i > 0; i--) {
+//    min[i] = min[i + 1] < nums[i] ? min[i + 1] : nums[i];
+//  }
+//  int ans = 0;
+//  for (int i = 1; i < nums.size() - 1; i++) {
+//    if (nums[i] > max[i - 1] && nums[i] < min[i + 1]) {
+//      ans += 2;
+//    } else if (nums[i - 1] < nums[i] && nums[i] < nums[i + 1]) {
+//      ans += 1;
+//    
+//    }
+//  }
+//  std::cout << ans;
+//  return ans;
+//}
+
+//int main() {
+//  int num = 10;
+//  int k = 1;
+//  int z = 10;
+//  int a = 1;
+//  int ans = 0;
+//  for (int i = 1; i < k;i++) {
+//    z *= 10;
+//  }
+//  while (z <= (num*10)) {
+//
+//    int zz= (num - (num%a) -((num/z)*z))/a;
+//    if (zz == 0) {
+//      z *= 10;
+//      a *= 10;
+//      continue;
+//    }
+//    ans += (num % zz == 0 ? 1 : 0);
+//    z *= 10;
+//    a *= 10;
+//  }
+//  return ans;
+//}
+
+
+#include <iostream>
+//int qq(int a, int b, int n) { 
+//  return n == 0 ? b:qq(b, a + b, n - 1); 
+//
+//}
+//class Solution {
+// public:
+//  unordered_map<char, unordered_map<char,long long>> zz;
+//  unordered_map < char, unordered_map<char, long long>> dij_map;
+//  long long minconst(char a, char b){
+//    // 如果已经缓存过以 a 为起点的结果，直接返回
+//    if (dij_map.find(a) != dij_map.end()) {
+//      auto& cache = dij_map[a];
+//      if (cache.find(b) != cache.end()) {
+//        return cache[b];
+//      }
+//      // 即使 b 不在 cache 中（不可达），也应返回 INF（见下文逻辑）
+//      // 所以我们仍需确保 cache 包含所有可达点；但更安全的做法是：如果没跑过
+//      // Dijkstra，就跑一次
+//    }
+//
+//    // 如果还没对起点 a 运行过 Dijkstra，则运行一次并缓存全部结果
+//    if (dij_map.find(a) == dij_map.end()) {
+//      // 初始化距离：用 long long 防溢出
+//      unordered_map<char, long long> dist;
+//      // 所有在图中出现过的节点（包括作为 key 或 value 出现的）
+//      unordered_map<char, bool> allNodes;
+//      for (const auto& [u, neighbors] : zz) {
+//        allNodes[u] = true;
+//        for (const auto& [v, w] : neighbors) {
+//          allNodes[v] = true;
+//        }
+//      }
+//
+//      // 初始化 dist 为 INF
+//      for (auto node : allNodes) {
+//        dist[node.first] = LLONG_MAX;
+//      }
+//      dist[a] = 0;
+//
+//      // 最小堆：{distance, node}
+//      priority_queue<pair<long long, char>, vector<pair<long long, char>>,
+//                     greater<pair<long long, char>>>
+//          pq;
+//      pq.push({0, a});
+//
+//      while (!pq.empty()) {
+//        auto [d, u] = pq.top();
+//        pq.pop();
+//
+//        // 跳过过期数据
+//        if (d != dist[u]) continue;
+//
+//        // 遍历 u 的所有邻居
+//        if (zz.find(u) != zz.end()) {
+//          for (const auto& [v, weight] : zz[u]) {
+//            long long nd = d + weight;
+//            if (nd < dist[v]) {
+//              dist[v] = nd;
+//              pq.push({nd, v});
+//            }
+//          }
+//        }
+//      }
+//
+//      // 缓存整个 dist 到 dij_map[a]
+//      dij_map[a] = dist;
+//    }
+//
+//    // 现在 dij_map[a] 一定存在
+//    const auto& result_map = dij_map[a];
+//    if (result_map.find(b) != result_map.end() &&
+//        result_map.at(b) != LLONG_MAX) {
+//      return result_map.at(b);
+//    } else {
+//      return LLONG_MAX;  // 表示不可达
+//    }
+//  }
+//  long long minimumCost(string source, string target, vector<char>&& original,
+//                        vector<char>&& changed, vector<int>&& cost) {
+//
+//    for (int i = 0; i < original.size(); i++) {
+//      if (zz.find(original[i]) == zz.end()) {
+//        zz[original[i]][changed[i]] = cost[i];
+//        continue;
+//      }
+//      if (zz[original[i]].find(changed[i]) == zz[original[i]].end()) {
+//        zz[original[i]][changed[i]] = cost[i];
+//        continue;
+//      }
+//      zz[original[i]][changed[i]] = cost[i] < zz[original[i]][changed[i]]
+//                                        ? cost[i]
+//                                        : zz[original[i]][changed[i]];
+//    }
+//    int ans = 0;
+//    for (int i = 0; i < source.size(); i++) {
+//      if (source[i] == target[i]) continue;
+//      ans += minconst(source[i], target[i]);
+//    }
+//    return ans;
+//  }
+//};
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int max = 0;
+        int left = 0;
+        int right = 1;
+        std::unordered_set<char> z;
+        z.insert(s[0]);
+        while (right < s.size()) {
+            if (z.find(s[right]) != z.end()) {
+                while (s[left] != s[right]) {
+                    z.erase(s[left]);
+                    left++;
+                }
+                z.erase(s[left]);
+                left++;
+            }
+            else {
+                max = max > (right - left +1) ? max : (right - left + 1);
+            }
+            z.insert(s[right]);
+            right++;
+        }
+        return max;
+    }
+};
 int main() {
-  std::string coordinate1;
-  std::string coordinate2;
-  if (abs(coordinate1[0] - coordinate2[0]) % 2) {
-    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return true;
-    return false;
-  } else {
-    if (abs(abs(coordinate1[1] - coordinate2[1]) % 2)) return false;
-    return true;
-  }
+  // int n = 4;
+  // if (n == 1 || n == 2) {
+  //   return 1;
+  // }
+  // int a = 1;
+  // int b = 1;
+  // int ans;
+  // for (int i = 2; i < n; i++) {
+  //   ans = a + b;
+  //   a = b;
+  //   b = ans;
+  // }
+  // return ans;
+  // std::cout << qq(1, 1, n - 1);
+  Solution a;
+
+  a.lengthOfLongestSubstring("pwwkew");
 }
